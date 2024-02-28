@@ -2,54 +2,29 @@ package org.pearharmony.UI;
 
 import javax.swing.*;
 
-import java.awt.Color;
-import java.awt.Rectangle;
 
 public class GraphicWindow extends JFrame{
+
+    Messager messager;
+    AddressList addressList = new AddressList();
 
     public GraphicWindow(){
         setTitle("PearHarmony");
 
-        setSize(1000, 700);
+        setSize(810, 710);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(createAdressList());
-        add(createMessager());
+        messager = new Messager(this);
+
+        add(messager);
+        add(addressList);
+        add(new JPanel());
 
         setVisible(true);
     }
 
-    private JPanel createAdressList(){
-        JPanel addressList = new JPanel();
-
-        addressList.setBounds(new Rectangle(300,700));
-
-        addressList.setBackground(Color.GREEN);
-
-        JTextField name = new JTextField("Addresses");
-        name.setEditable(false);
-
-        JScrollPane list = new JScrollPane();
-
-        list.getViewport().add(new JButton("tets"));
-
-        list.add(new JTextField("sdsaf"));
-
-        addressList.add(name);
-        addressList.add(list);
-
-        return addressList;
-    }
-
-    private JPanel createMessager(){
-        JPanel messanger = new JPanel();
-
-        messanger.setBounds(new Rectangle(200,700)); 
-
-        messanger.setBackground(Color.blue);
-
-
-        return messanger;
+    public void Update(){
+        revalidate();
     }
 
 }
