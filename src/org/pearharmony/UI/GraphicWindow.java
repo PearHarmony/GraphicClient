@@ -2,6 +2,9 @@ package org.pearharmony.UI;
 
 import javax.swing.*;
 
+import java.awt.Image;
+import java.nio.file.Path;
+
 
 public class GraphicWindow extends JFrame{
 
@@ -17,10 +20,18 @@ public class GraphicWindow extends JFrame{
         messager = new Messager(this);
 
         add(messager);
-        add(addressList);
-        add(new JPanel());
+        //add(addressList);
+        //add(new JPanel());
 
         setVisible(true);
+    }
+
+    public void ReciveMSG(String sender,String msg){
+        messager.AddMessage(sender,msg);
+    }
+
+    public void ReciveMSG(String sender,Image msg, Path path){
+        messager.AddMessage(sender,msg, path);
     }
 
     public void Update(){
