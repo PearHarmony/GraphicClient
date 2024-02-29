@@ -15,7 +15,7 @@ public class App {
         try {
             File file = new File("a.png");
             Image img = ImageIO.read(file);
-            window1.ReciveMSG("main",img, file.toPath());
+            window1.ReciveMSG("main", img, file.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }

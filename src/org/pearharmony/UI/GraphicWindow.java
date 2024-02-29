@@ -6,13 +6,12 @@ import javax.swing.*;
 import java.awt.Image;
 import java.nio.file.Path;
 
-
-public class GraphicWindow extends JFrame{
+public class GraphicWindow extends JFrame {
 
     Messager messager;
     AddressList addressList = new AddressList();
 
-    public GraphicWindow(){
+    public GraphicWindow() {
         setTitle("PearHarmony");
 
         setSize(810, 710);
@@ -27,24 +26,24 @@ public class GraphicWindow extends JFrame{
         setVisible(true);
     }
 
-    public void ReciveMSG(String sender,String msg){
-        messager.AddMessage(sender,msg);
+    public void ReciveMSG(String sender, String msg) {
+        messager.AddMessage(sender, msg);
     }
 
-    public void ReciveMSG(String sender,Image msg, Path path){
-        messager.AddMessage(sender,msg, path);
+    public void ReciveMSG(String sender, Image msg, Path path) {
+        messager.AddMessage(sender, msg, path);
     }
-    public void ReciveMSG(String sender, Path path){
-        try{
+
+    public void ReciveMSG(String sender, Path path) {
+        try {
             Image msg = ImageIO.read(path.toFile());
-            messager.AddMessage(sender,msg, path);
-        }
-        catch (Exception e){
+            messager.AddMessage(sender, msg, path);
+        } catch (Exception e) {
 
         }
     }
 
-    public void Update(){
+    public void Update() {
         revalidate();
     }
 

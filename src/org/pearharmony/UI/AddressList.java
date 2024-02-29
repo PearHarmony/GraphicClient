@@ -13,11 +13,11 @@ public class AddressList extends JPanel implements ActionListener{
     private Map<JButton, String> addressList = new HashMap<>();
     JPanel AddrSelList = new JPanel();
 
-    public AddressList(){
-        setBounds(0,0,300,700);
+    public AddressList() {
+        setBounds(0, 0, 300, 700);
 
         setBackground(Color.GREEN);
-        
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JButton name = new JButton("Addresses");
