@@ -1,5 +1,5 @@
 package org.pearharmony.UI;
-
+import org.pearharmony.Network.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -23,6 +24,8 @@ public class Messager extends JPanel implements ActionListener{
     JTextField input = new JTextField(20);
     JButton send;
     JButton imgButton;
+    NetworkControler networkControler=new NetworkControler();
+    Encoder en = new Encoder();
 
     GraphicWindow grapWindow;    
 
@@ -104,7 +107,9 @@ public class Messager extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == send || e.getSource() == input){
-            AddMessage("ich",input.getText());
+            String msg = input.getText();
+            networkControler.send2Peer("localhost",10000 , (byte)0x00, en.textEncode(msg));
+            AddMessage("ich",msg);//TODO: Implement listener
             input.setText("");
         }
         else if(e.getSource() == imgButton)
@@ -119,7 +124,8 @@ public class Messager extends JPanel implements ActionListener{
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 
                     Image img = ImageIO.read(selectedFile);
-                    AddMessage("ich", img, selectedFile.toPath());
+                    networkControler.send2Peer("localhost", 10000, (byte)0x01,en.pictureEncode(Paths.get(selectedFile.getAbsolutePath())));
+                    AddMessage("ich", img, selectedFile.toPath());//TODO: Implement listener
                 }
             }catch (Exception ex){
 
