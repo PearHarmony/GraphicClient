@@ -1,6 +1,7 @@
 package org.pearharmony.UI;
 
-import org.pearharmony.Network.*;
+import org.pearharmony.Control.Controll;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -8,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -25,13 +24,13 @@ public class Messager extends JPanel implements ActionListener {
     JTextField input = new JTextField(20);
     JButton send;
     JButton imgButton;
-    NetworkControler networkControler = new NetworkControler();
-    Encoder en = new Encoder();
 
     GraphicWindow grapWindow;
+    Controll controll;
 
-    public Messager(GraphicWindow window) {
+    public Messager(GraphicWindow window, Controll controll) {
         this.grapWindow = window;
+        this.controll = controll;
 
         setBackground(Color.CYAN);
 
@@ -108,9 +107,7 @@ public class Messager extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == send || e.getSource() == input) {
             String msg = input.getText();
-            networkControler.send2Peer("localhost", 10000, en.text(msg));
-            AddMessage("ich", msg);// TODO: Implement listener
-            AddMessage("debug", en.text(msg)[0] + "");
+            controll.SendText(address.getText(), msg);
             input.setText("");
         } else if (e.getSource() == imgButton) {
             try {
@@ -120,13 +117,8 @@ public class Messager extends JPanel implements ActionListener {
                 int result = fileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
-                    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-
-                    Image img = ImageIO.read(selectedFile);
-                    networkControler.send2Peer("localhost", 10000,
-                            en.picture(Paths.get(selectedFile.getAbsolutePath())));
-                    AddMessage("ich", img, selectedFile.toPath());// TODO: Implement listener
-                    AddMessage("debug", en.picture(Paths.get(selectedFile.getAbsolutePath()))[0] + "");
+                    
+                    controll.SendImage(address.getText(), selectedFile.toPath());
                 }
             } catch (Exception ex) {
 
