@@ -2,10 +2,16 @@ package org.pearharmony.UI;
 
 import javax.swing.*;
 
-
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AddressList extends JPanel{
+public class AddressList extends JPanel implements ActionListener{
+
+    private Map<JButton, String> addressList = new HashMap<>();
+    JPanel AddrSelList = new JPanel();
 
     public AddressList(){
         setBounds(0,0,300,700);
@@ -15,8 +21,6 @@ public class AddressList extends JPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JButton name = new JButton("Addresses");
-        
-        JPanel AddrSelList = new JPanel();
 
         AddrSelList.setLayout(new BoxLayout(AddrSelList, BoxLayout.Y_AXIS));
 
@@ -31,5 +35,16 @@ public class AddressList extends JPanel{
 
         add(name);
         add(list);
+    }
+
+    public void UpdateAddList(){
+        for (JButton button : addressList.keySet()) {
+            AddrSelList.add(button);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        addressList.get(e.getSource());
     }
 }

@@ -21,8 +21,8 @@ public class GraphicWindow extends JFrame{
         messager = new Messager(this);
 
         add(messager);
-        //add(addressList);
-        //add(new JPanel());
+        add(addressList);
+        add(new JPanel());
 
         setVisible(true);
     }
