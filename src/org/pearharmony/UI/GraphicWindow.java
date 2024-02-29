@@ -10,15 +10,17 @@ import java.nio.file.Path;
 public class GraphicWindow extends JFrame {
 
     Messager messager;
-    AddressList addressList = new AddressList();
+    AddressList addressList;
 
     public GraphicWindow(Controll cont) {
         setTitle("PearHarmony");
 
-        setSize(810, 710);
+        setSize(870, 750);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         messager = new Messager(this, cont);
+        addressList = new AddressList(messager);
 
         add(messager);
         add(addressList);

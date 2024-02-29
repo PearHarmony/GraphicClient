@@ -35,7 +35,7 @@ public class Messager extends JPanel implements ActionListener {
         setBackground(Color.CYAN);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBounds(300, 0, 500, 700);
+        setBounds(300, 0, 550, 700);
 
         JPanel namePanel = new JPanel();
         JTextField name2 = new JTextField("Ich bin ajdiw");
@@ -61,19 +61,21 @@ public class Messager extends JPanel implements ActionListener {
 
         JPanel inputPanel = new JPanel();
 
-        inputPanel.setSize(new Dimension(300, 20));
-        input.addActionListener(this);
+        inputPanel.setSize(new Dimension(350, 20));
+        
         address.setToolTipText("Addresse");
+
         input.setToolTipText("Message");
-        inputPanel.add(address);
-        inputPanel.add(input);
-        inputPanel.setBackground(Color.ORANGE);
+        input.addActionListener(this);
+
         send = new JButton("Send");
         send.addActionListener(this);
 
         imgButton = new JButton("Img");
         imgButton.addActionListener(this);
 
+        inputPanel.add(address);
+        inputPanel.add(input);
         inputPanel.add(send);
         inputPanel.add(imgButton);
 
@@ -82,7 +84,7 @@ public class Messager extends JPanel implements ActionListener {
 
     public void AddMessage(String sender, String msg) {
         JTextField newMsg = new JTextField(sender + ": " + msg);
-        // newMsg.setPreferredSize(new Dimension(999, 25));
+        newMsg.setEditable(false);
         newMsg.setMaximumSize(new Dimension(990, 25));
         content.add(newMsg);
 
@@ -124,5 +126,9 @@ public class Messager extends JPanel implements ActionListener {
 
             }
         }
+    }
+
+    public void SetAddres(String address){
+        this.address.setText(address);
     }
 }

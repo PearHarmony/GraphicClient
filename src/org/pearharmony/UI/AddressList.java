@@ -9,11 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddressList extends JPanel implements ActionListener{
+    Messager messager;
 
     private Map<JButton, String> addressList = new HashMap<>();
     JPanel AddrSelList = new JPanel();
 
-    public AddressList() {
+    public AddressList(Messager messager) {
+        this.messager = messager;
         setBounds(0, 0, 300, 700);
 
         setBackground(Color.GREEN);
@@ -24,10 +26,7 @@ public class AddressList extends JPanel implements ActionListener{
 
         AddrSelList.setLayout(new BoxLayout(AddrSelList, BoxLayout.Y_AXIS));
 
-        AddrSelList.add(new JButton("tets"));
-        AddrSelList.add(new JButton("sdsaf"));
-        AddrSelList.add(new JButton("tets"));
-        AddrSelList.add(new JButton("sdsaf"));
+        AddAddress("localhost", "localhost");
 
         JScrollPane list = new JScrollPane(AddrSelList);
         list.setWheelScrollingEnabled(true);
@@ -37,14 +36,23 @@ public class AddressList extends JPanel implements ActionListener{
         add(list);
     }
 
-    public void UpdateAddList(){
+    public void UpdateAddressList(){
+        AddrSelList.removeAll();
         for (JButton button : addressList.keySet()) {
             AddrSelList.add(button);
         }
     }
 
+    public void AddAddress(String name, String address){
+        JButton button = new JButton(name);
+        button.addActionListener(this);
+        addressList.put(button, address);
+
+        UpdateAddressList();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        addressList.get(e.getSource());
+        messager.SetAddres(addressList.get(e.getSource()));
     }
 }
