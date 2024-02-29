@@ -61,6 +61,8 @@ public class Messager extends JPanel implements ActionListener{
         
         inputPanel.setSize(new Dimension(300, 20));
         input.addActionListener(this);
+        address.setToolTipText("Addresse");
+        input.setToolTipText("Message");
         inputPanel.add(address);
         inputPanel.add(input);
         inputPanel.setBackground(Color.ORANGE);

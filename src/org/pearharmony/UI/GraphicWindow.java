@@ -1,5 +1,6 @@
 package org.pearharmony.UI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.Image;
@@ -32,6 +33,15 @@ public class GraphicWindow extends JFrame{
 
     public void ReciveMSG(String sender,Image msg, Path path){
         messager.AddMessage(sender,msg, path);
+    }
+    public void ReciveMSG(String sender, Path path){
+        try{
+            Image msg = ImageIO.read(path.toFile());
+            messager.AddMessage(sender,msg, path);
+        }
+        catch (Exception e){
+
+        }
     }
 
     public void Update(){

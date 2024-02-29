@@ -10,8 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-//import javax.swing.JOptionPane;
-
 public class pictureBox implements ActionListener{
 
     Image img;
@@ -26,6 +24,6 @@ public class pictureBox implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         Icon icon = new ImageIcon(img);
         JLabel picture = new JLabel(icon);
-        JOptionPane.showMessageDialog(null,picture);
+        JOptionPane.showMessageDialog(null,picture,"Picture: " + path.toAbsolutePath().toString(),0);
     }
 }
