@@ -40,12 +40,7 @@ public class Sender implements Runnable {
 		}
 
 		try {
-			byte[] pack = new byte[data.length + 1];
-			pack[0] = type;
-			for (int i = 0; i < data.length; i++) {
-				pack[i + 1] = data[i];
-			}
-			out.write(pack);
+			out.write(data);
 			out.close();
 			socket.close();
 		} catch (IOException e) {

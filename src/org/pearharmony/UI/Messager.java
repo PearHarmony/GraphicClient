@@ -108,8 +108,9 @@ public class Messager extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == send || e.getSource() == input){
             String msg = input.getText();
-            networkControler.send2Peer("localhost",10000 , (byte)0x00, en.textEncode(msg));
+            networkControler.send2Peer("localhost",10000 , (byte)0x00, en.text(msg));
             AddMessage("ich",msg);//TODO: Implement listener
+            AddMessage("debug",en.text(msg)[0]+"");
             input.setText("");
         }
         else if(e.getSource() == imgButton)
@@ -124,8 +125,9 @@ public class Messager extends JPanel implements ActionListener{
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 
                     Image img = ImageIO.read(selectedFile);
-                    networkControler.send2Peer("localhost", 10000, (byte)0x01,en.pictureEncode(Paths.get(selectedFile.getAbsolutePath())));
+                    networkControler.send2Peer("localhost", 10000, (byte)0x01,en.picture(Paths.get(selectedFile.getAbsolutePath())));
                     AddMessage("ich", img, selectedFile.toPath());//TODO: Implement listener
+                    AddMessage("debug", en.picture(Paths.get(selectedFile.getAbsolutePath()))[0]+"");
                 }
             }catch (Exception ex){
 

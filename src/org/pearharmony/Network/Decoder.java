@@ -22,11 +22,11 @@ public class Decoder {
         return _data[0];
     }
 
-    public String textDecode(byte[] _data) {
+    public String text(byte[] _data) {
         return new String(_data, StandardCharsets.UTF_8);
     }
 
-    public Path pictureDecode(byte[] _data, String _path) {
+    public Path picture(byte[] _data, String _path) {
         Path path = Paths.get(_path,System.currentTimeMillis()+ ".png");
         try {
             Files.write(path, _data, StandardOpenOption.CREATE);

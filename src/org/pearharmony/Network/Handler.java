@@ -23,11 +23,11 @@ public class Handler implements Runnable {
             dog=in.readAllBytes();
             switch (de.getType(dog)) {
                 case 1:
-                    gw.ReciveMSG(socket.getInetAddress()+"", null,de.pictureDecode(de.cleanData(dog), "C:"));
+                    gw.ReciveMSG(socket.getInetAddress()+"", null,de.picture(de.cleanData(dog), "C:"));
                     break;
             
                 default:
-                gw.ReciveMSG(socket.getInetAddress()+"", de.textDecode(de.cleanData(dog)));
+                gw.ReciveMSG(socket.getInetAddress()+"", de.text(de.cleanData(dog)));
                     break;
             }
             //TODO: Output data somewhere
