@@ -13,16 +13,10 @@ public class Sender implements Runnable {
 	byte type;
 	byte[] data;
 
-	// constructor to put ip address and port
-	/**
-	 * @param address
-	 * @param port
-	 */
-	public Sender(String _address, int _port, byte _type, byte[] _data) {
+	public Sender(String _address, int _port, byte[] _data) {
 		address = _address;
 		port = _port;
 		data = _data;
-		type = _type;
 	}
 
 	public void run() {
