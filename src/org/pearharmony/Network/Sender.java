@@ -1,4 +1,4 @@
-package org.pearharmony;
+package org.pearharmony.Network;
 
 // A Java program for a Client
 import java.io.*;

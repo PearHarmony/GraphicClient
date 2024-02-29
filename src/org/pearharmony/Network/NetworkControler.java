@@ -1,4 +1,4 @@
-package org.pearharmony;
+package org.pearharmony.Network;
 
 public class NetworkControler {
     public NetworkControler() {
