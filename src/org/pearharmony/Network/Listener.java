@@ -22,7 +22,7 @@ public class Listener implements Runnable {
 			server = new ServerSocket(port);
 
 			socket = server.accept();
-			//handle connection
+			// handle connection
 			handle = new Handler(socket);
 			Thread handler = new Thread(handle);
 			handler.start();

@@ -41,5 +41,4 @@ public class Sender implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 }
