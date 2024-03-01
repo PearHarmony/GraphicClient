@@ -2,7 +2,6 @@ package org.pearharmony.UI;
 
 import org.pearharmony.Control.Controll;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -20,8 +19,8 @@ import javax.swing.JTextField;
 public class Messager extends JPanel implements ActionListener {
     JScrollPane pane;
     JPanel content = new JPanel();
-    JTextField address = new JTextField(16);
-    JTextField input = new JTextField(20);
+    JTextField address = new JTextField(25);
+    JTextField input = new JTextField(25);
     JButton send;
     JButton imgButton;
 
@@ -32,21 +31,15 @@ public class Messager extends JPanel implements ActionListener {
         this.grapWindow = window;
         this.controll = controll;
 
-        setBackground(Color.CYAN);
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBounds(300, 0, 550, 700);
 
         JPanel namePanel = new JPanel();
-        JTextField name2 = new JTextField("Ich bin ajdiw");
+        JTextField name2 = new JTextField("Nachrichtenfeld");
         namePanel.add(name2);
-        namePanel.setBackground(Color.DARK_GRAY);
         namePanel.setSize(200, 10);
-        // namePanel.setPreferredSize(new Dimension(490, 10));
-        // namePanel.setMaximumSize(new Dimension(999,100));
-        // namePanel.setMinimumSize(new Dimension(400,100));
 
-        // add(namePanel);
+        add(namePanel);
 
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
@@ -60,8 +53,14 @@ public class Messager extends JPanel implements ActionListener {
         add(pane);
 
         JPanel inputPanel = new JPanel();
+        inputPanel.setMaximumSize(new Dimension(450, 70));
+        inputPanel.setPreferredSize(new Dimension(450, 70));
 
-        inputPanel.setSize(new Dimension(350, 20));
+        JTextField addressInfo = new JTextField("Addresse:", 8);
+        JTextField nameInfo = new JTextField("Nachricht:", 8);
+
+        addressInfo.setEditable(false);
+        nameInfo.setEditable(false);
         
         address.setToolTipText("Addresse");
 
@@ -71,12 +70,14 @@ public class Messager extends JPanel implements ActionListener {
         send = new JButton("Send");
         send.addActionListener(this);
 
-        imgButton = new JButton("Img");
+        imgButton = new JButton(" Img ");
         imgButton.addActionListener(this);
 
+        inputPanel.add(addressInfo);
         inputPanel.add(address);
-        inputPanel.add(input);
         inputPanel.add(send);
+        inputPanel.add(nameInfo);
+        inputPanel.add(input);
         inputPanel.add(imgButton);
 
         add(inputPanel);
@@ -95,12 +96,10 @@ public class Messager extends JPanel implements ActionListener {
     public void AddMessage(String sender, Image image, Path path) {
         pictureBox box = new pictureBox(image, path);
 
-        JButton picture = new JButton(sender + ": Bild");
+        JButton picture = new JButton(sender + ": Bild (" + path.toString() + ")");
         picture.addActionListener(box);
         picture.setPreferredSize(new Dimension(490, 25));
         content.add(picture);
-
-        // pane.
 
         grapWindow.Update();
     }

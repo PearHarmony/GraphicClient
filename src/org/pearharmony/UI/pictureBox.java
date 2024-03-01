@@ -24,6 +24,7 @@ public class pictureBox implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Icon icon = new ImageIcon(img);
         JLabel picture = new JLabel(icon);
-        JOptionPane.showMessageDialog(null, picture, "Picture: " + path.toAbsolutePath().toString(), 0);
+        JOptionPane.showMessageDialog(null, picture, "Picture: "
+                 + path.toAbsolutePath().toString(), JOptionPane.INFORMATION_MESSAGE);
     }
 }
