@@ -12,7 +12,7 @@ public class Encoder {
         byte[] pack = new byte[data.length + 1];
         pack[0] = (byte) 0x00;
         for (int i = 0; i < data.length; i++) {
-            pack[(i + 1)] = data[i];
+            pack[i + 1] = data[i];
         }
         return pack;
     }
