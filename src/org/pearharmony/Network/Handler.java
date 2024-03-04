@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+
 import org.pearharmony.Control.*;
 
 public class Handler implements Runnable {
@@ -36,7 +37,7 @@ public class Handler implements Runnable {
                     control.ReciveText(getIP(),de.text(de.cleanData(dog)));
                     break;
                 case 1:
-                    control.ReciveImage(getIP(), de.picture(de.cleanData(dog), "C:"));
+                    control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.home")));
                     break;
             }
             // close connection
