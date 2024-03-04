@@ -50,7 +50,7 @@ public class Control {
             Image msg = ImageIO.read(path.toFile());
             window.ReciveMSG("ich -> " + address, msg, path);
 
-            networkControler.send2Peer("localhost", 10000, en.picture(path));
+            networkControler.send2Peer(address, 10000, en.picture(path));
 
         } catch (Exception e) {
 
