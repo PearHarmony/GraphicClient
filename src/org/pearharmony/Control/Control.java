@@ -9,14 +9,14 @@ import org.pearharmony.UI.GraphicWindow;
 import org.pearharmony.Network.NetworkControler;
 import org.pearharmony.Network.Encoder;
 
-public class Controll {
+public class Control {
     // UI
     GraphicWindow window;
 
     NetworkControler networkControler = new NetworkControler();
     Encoder en = new Encoder();
 
-    public Controll(){
+    public Control(){
         window = new GraphicWindow(this);
     }
 

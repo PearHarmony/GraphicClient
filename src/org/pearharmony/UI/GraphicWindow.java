@@ -2,7 +2,7 @@ package org.pearharmony.UI;
 
 import javax.swing.*;
 
-import org.pearharmony.Control.Controll;
+import org.pearharmony.Control.Control;
 
 import java.awt.Image;
 import java.nio.file.Path;
@@ -12,7 +12,7 @@ public class GraphicWindow extends JFrame {
     Messager messager;
     AddressList addressList;
 
-    public GraphicWindow(Controll cont) {
+    public GraphicWindow(Control cont) {
         setTitle("PearHarmony");
 
         setSize(870, 750);

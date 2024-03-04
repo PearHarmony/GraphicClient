@@ -1,7 +1,5 @@
 package org.pearharmony.UI;
 
-import org.pearharmony.Control.Controll;
-
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -16,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.pearharmony.Control.Control;
+
 public class Messager extends JPanel implements ActionListener {
     JScrollPane pane;
     JPanel content = new JPanel();
@@ -25,9 +25,9 @@ public class Messager extends JPanel implements ActionListener {
     JButton imgButton;
 
     GraphicWindow grapWindow;
-    Controll controll;
+    Control controll;
 
-    public Messager(GraphicWindow window, Controll controll) {
+    public Messager(GraphicWindow window, Control controll) {
         this.grapWindow = window;
         this.controll = controll;
 
