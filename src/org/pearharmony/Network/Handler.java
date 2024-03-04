@@ -19,10 +19,10 @@ public class Handler implements Runnable {
         socket = _socket;
         control = _control;
     }
-    public String getIP()
-    {
-       String string = socket.getInetAddress()+"";
-       return string.replace("/","");
+
+    public String getIP() {
+        String string = socket.getInetAddress() + "";
+        return string.replace("/", "");
     }
 
     public void run() {
@@ -34,7 +34,7 @@ public class Handler implements Runnable {
 
                 case 0:
                 default:
-                    control.ReciveText(getIP(),de.text(de.cleanData(dog)));
+                    control.ReciveText(getIP(), de.text(de.cleanData(dog)));
                     break;
                 case 1:
                     control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.home")));

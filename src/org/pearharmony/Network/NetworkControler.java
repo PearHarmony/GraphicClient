@@ -16,7 +16,7 @@ public class NetworkControler {
     }
 
     public void startListening(int _port) {
-        Listener host = new Listener(_port,control);
+        Listener host = new Listener(_port, control);
         Thread listener = new Thread(host);
         listener.start();
     }

@@ -21,7 +21,7 @@ public class Listener implements Runnable {
 
 	// constructor with port
 	public void run() {
-		
+
 		try {
 			server = new ServerSocket(port);
 		} catch (IOException e) {

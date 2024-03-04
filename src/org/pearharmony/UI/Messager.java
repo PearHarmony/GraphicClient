@@ -63,7 +63,7 @@ public class Messager extends JPanel implements ActionListener {
 
         addressInfo.setEditable(false);
         nameInfo.setEditable(false);
-        
+
         address.setToolTipText("Addresse");
 
         input.setToolTipText("Message");
@@ -120,7 +120,7 @@ public class Messager extends JPanel implements ActionListener {
                 int result = fileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
-                    
+
                     controll.SendImage(addressList.translateAddress(address.getText()), selectedFile.toPath());
                 }
             } catch (Exception ex) {
@@ -129,11 +129,11 @@ public class Messager extends JPanel implements ActionListener {
         }
     }
 
-    public void SetAddres(String address){
+    public void SetAddres(String address) {
         this.address.setText(address);
     }
 
-    public void SetAddressList(AddressList addressList){
+    public void SetAddressList(AddressList addressList) {
         this.addressList = addressList;
     }
 }

@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddressList extends JPanel implements ActionListener{
+public class AddressList extends JPanel implements ActionListener {
     Messager messager;
 
     private Map<JButton, String> addressList = new HashMap<>();
@@ -16,7 +16,7 @@ public class AddressList extends JPanel implements ActionListener{
 
     JTextField newAddrName = new JTextField(15);
     JTextField newAddrIP = new JTextField(15);
-    JButton addNewIndex = new JButton("Add");    
+    JButton addNewIndex = new JButton("Add");
     JButton removeIndex = new JButton("Remove");
 
     public AddressList(Messager messager) {
@@ -40,7 +40,7 @@ public class AddressList extends JPanel implements ActionListener{
         JPanel addPanel = new JPanel();
         addPanel.setMaximumSize(new Dimension(400, 90));
         addPanel.setPreferredSize(new Dimension(400, 90));
-                
+
         addNewIndex.addActionListener(this);
         removeIndex.addActionListener(this);
 
@@ -65,7 +65,7 @@ public class AddressList extends JPanel implements ActionListener{
         add(addPanel);
     }
 
-    public void UpdateAddressList(){
+    public void UpdateAddressList() {
         AddrSelList.removeAll();
         for (JButton button : addressList.keySet()) {
             AddrSelList.add(button);
@@ -74,17 +74,18 @@ public class AddressList extends JPanel implements ActionListener{
         revalidate();
     }
 
-    public void AddAddress(String name, String address){
+    public void AddAddress(String name, String address) {
         JButton button = new JButton(name);
         button.addActionListener(this);
         addressList.put(button, address);
 
         UpdateAddressList();
     }
-    public void RemoveAddress(String name){
-        System.out.println("remove: " +name);
+
+    public void RemoveAddress(String name) {
+        System.out.println("remove: " + name);
         for (int i = 0; i < addressList.size(); i++) {
-            if(addressList.values().toArray()[i].equals(name)){
+            if (addressList.values().toArray()[i].equals(name)) {
                 System.out.println("found");
                 addressList.remove(addressList.keySet().toArray()[i]);
                 UpdateAddressList();
@@ -94,10 +95,10 @@ public class AddressList extends JPanel implements ActionListener{
 
     }
 
-    public String translateAddress(String ip){
+    public String translateAddress(String ip) {
         for (JButton tbutton : addressList.keySet()) {
-            if(tbutton.getText().equals(ip)){
-                if(addressList.containsKey(tbutton)){
+            if (tbutton.getText().equals(ip)) {
+                if (addressList.containsKey(tbutton)) {
                     return addressList.get(tbutton);
                 }
             }
@@ -107,19 +108,16 @@ public class AddressList extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(addressList.containsKey(e.getSource())){
+        if (addressList.containsKey(e.getSource())) {
             messager.SetAddres(addressList.get(e.getSource()));
-        }
-        else if(e.getSource() == addNewIndex)
-        {
-            if(newAddrName.getText().length() > 0 && newAddrIP.getText().length() > 0)
-            {
+        } else if (e.getSource() == addNewIndex) {
+            if (newAddrName.getText().length() > 0 && newAddrIP.getText().length() > 0) {
                 AddAddress(newAddrName.getText(), newAddrIP.getText());
                 newAddrName.setText("");
                 newAddrIP.setText("");
             }
-        }else if(e.getSource() == removeIndex){
-            RemoveAddress(newAddrName.getText());            
+        } else if (e.getSource() == removeIndex) {
+            RemoveAddress(newAddrName.getText());
             newAddrName.setText("");
             newAddrIP.setText("");
         }
