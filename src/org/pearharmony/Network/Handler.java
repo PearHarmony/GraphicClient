@@ -29,7 +29,7 @@ public class Handler implements Runnable {
 
                 case 0:
                 default:
-                    control.ReciveText(socket.getInetAddress() + "",de.text(dog));
+                    control.ReciveText(socket.getInetAddress() + "",de.text(de.cleanData(dog)));
                     break;
                 case 1:
                     control.ReciveImage(socket.getInetAddress() + "", de.picture(de.cleanData(dog), "C:"));

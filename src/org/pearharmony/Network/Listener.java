@@ -12,7 +12,7 @@ public class Listener implements Runnable {
 	private int port;
 	public Handler handle;
 	private Control control;
-	Thread handler;
+	Thread thread;
 
 	public Listener(int _port, Control _control) {
 		port = _port;
@@ -25,8 +25,6 @@ public class Listener implements Runnable {
 		try {
 			server = new ServerSocket(port);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		while (true) {
 
@@ -36,8 +34,8 @@ public class Listener implements Runnable {
 				socket = server.accept();
 				// handle connection
 				handle = new Handler(socket, control);
-				handler = new Thread(handle);
-				handler.start();
+				thread = new Thread(handle);
+				thread.start();
 
 			} catch (IOException e) {
 				e.printStackTrace();
