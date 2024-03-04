@@ -24,16 +24,17 @@ public class Handler implements Runnable {
         try {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dog = in.readAllBytes();
+            if(de.cleanData(dog)!=null){
             switch (de.getType(dog)) {
 
                 case 0:
                 default:
-                    control.ReciveText(socket.getInetAddress() + "", de.text(de.cleanData(dog)));
+                    control.ReciveText(socket.getInetAddress() + "",de.text(dog));
                     break;
                 case 1:
-                    control.ReciveImage(socket.getInetAddress() + "", null, de.picture(de.cleanData(dog), "C:"));
+                    control.ReciveImage(socket.getInetAddress() + "", de.picture(de.cleanData(dog), "C:"));
                     break;
-            }
+            }}
             // close connection
             socket.close();
             in.close();

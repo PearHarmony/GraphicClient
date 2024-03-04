@@ -19,6 +19,7 @@ public class Control {
     public Control() {
         window = new GraphicWindow(this);
         networkControler = new NetworkControler(this);
+        networkControler.startListening(10000);
     }
 
     public void ReciveText(String sender, String msg) {

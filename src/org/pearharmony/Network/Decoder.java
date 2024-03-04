@@ -10,8 +10,8 @@ import java.io.*;
 public class Decoder {
     public byte[] cleanData(byte[] _data) {
         byte[] clean = new byte[_data.length - 1];
-        for (int i = 1; i < clean.length; i++) {
-            _data[i] = clean[i - 1];
+        for (int i = 0; i < clean.length; i++) {
+            clean[i] = _data[i+1];
         }
         return clean;
     }

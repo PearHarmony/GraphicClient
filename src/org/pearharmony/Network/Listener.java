@@ -12,26 +12,36 @@ public class Listener implements Runnable {
 	private int port;
 	public Handler handle;
 	private Control control;
+	Thread handler;
 
-	public Listener(int _port,Control _control) {
+	public Listener(int _port, Control _control) {
 		port = _port;
 		control = _control;
 	}
 
 	// constructor with port
 	public void run() {
-		// starts server and waits for a connection
+		
 		try {
 			server = new ServerSocket(port);
-
-			socket = server.accept();
-			// handle connection
-			handle = new Handler(socket,control);
-			Thread handler = new Thread(handle);
-			handler.start();
-
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		while (true) {
+
+			// starts server and waits for a connection
+			try {
+
+				socket = server.accept();
+				// handle connection
+				handle = new Handler(socket, control);
+				handler = new Thread(handle);
+				handler.start();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
