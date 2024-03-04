@@ -96,7 +96,7 @@ public class AddressList extends JPanel implements ActionListener{
 
     public String translateAddress(String ip){
         for (JButton tbutton : addressList.keySet()) {
-            if(tbutton.getText() == ip ){
+            if(tbutton.getText().equals(ip)){
                 if(addressList.containsKey(tbutton)){
                     return addressList.get(tbutton);
                 }
