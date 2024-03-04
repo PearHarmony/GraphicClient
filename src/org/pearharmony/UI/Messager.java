@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import org.pearharmony.Control.Control;
 
 public class Messager extends JPanel implements ActionListener {
+    AddressList addressList;
+
     JScrollPane pane;
     JPanel content = new JPanel();
     JTextField address = new JTextField(25);
@@ -108,7 +110,7 @@ public class Messager extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == send || e.getSource() == input) {
             String msg = input.getText();
-            controll.SendText(address.getText(), msg);
+            controll.SendText(addressList.translateAddress(address.getText()), msg);
             input.setText("");
         } else if (e.getSource() == imgButton) {
             try {
@@ -119,7 +121,7 @@ public class Messager extends JPanel implements ActionListener {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
                     
-                    controll.SendImage(address.getText(), selectedFile.toPath());
+                    controll.SendImage(addressList.translateAddress(address.getText()), selectedFile.toPath());
                 }
             } catch (Exception ex) {
 
@@ -129,5 +131,9 @@ public class Messager extends JPanel implements ActionListener {
 
     public void SetAddres(String address){
         this.address.setText(address);
+    }
+
+    public void SetAddressList(AddressList addressList){
+        this.addressList = addressList;
     }
 }

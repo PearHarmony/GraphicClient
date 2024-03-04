@@ -21,6 +21,7 @@ public class GraphicWindow extends JFrame {
 
         messager = new Messager(this, cont);
         addressList = new AddressList(messager);
+        messager.SetAddressList(addressList);
 
         add(messager);
         add(addressList);
