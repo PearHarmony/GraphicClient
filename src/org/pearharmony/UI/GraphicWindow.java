@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import org.pearharmony.Control.Control;
 
+import java.awt.Font;
 import java.awt.Image;
 import java.nio.file.Path;
 
@@ -14,7 +15,7 @@ public class GraphicWindow extends JFrame {
 
     public GraphicWindow(Control cont) {
         setTitle("PearHarmony");
-
+        
         setSize(870, 750);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
