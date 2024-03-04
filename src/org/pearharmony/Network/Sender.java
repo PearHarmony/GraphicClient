@@ -3,6 +3,7 @@ package org.pearharmony.Network;
 // A Java program for a Client
 import java.io.*;
 import java.net.*;
+import org.pearharmony.Control.*;
 
 public class Sender implements Runnable {
 	// initialize socket and input output streams
@@ -12,11 +13,13 @@ public class Sender implements Runnable {
 	private int port;
 	byte type;
 	byte[] data;
+	Control control;
 
-	public Sender(String _address, int _port, byte[] _data) {
+	public Sender(String _address, int _port, byte[] _data,Control _control) {
 		address = _address;
 		port = _port;
 		data = _data;
+		control=_control;
 	}
 
 	public void run() {

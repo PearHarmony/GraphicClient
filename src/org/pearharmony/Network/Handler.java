@@ -1,36 +1,39 @@
 package org.pearharmony.Network;
-import org.pearharmony.UI.*;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import org.pearharmony.Control.*;
 
 public class Handler implements Runnable {
     private Socket socket;
     private DataInputStream in;
     private Decoder de = new Decoder();
-    GraphicWindow gw = new GraphicWindow();//TODO: Change this, may open a wnidow every time a message is recived
+    private Control control;
+
     byte[] dog;
 
-    public Handler(Socket _socket) {
+    public Handler(Socket _socket, Control _control) {
         socket = _socket;
+        control = _control;
     }
 
     public void run() {
         // takes input from the client socket
         try {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-            dog=in.readAllBytes();
+            dog = in.readAllBytes();
             switch (de.getType(dog)) {
-                case 1:
-                    gw.ReciveMSG(socket.getInetAddress()+"", null,de.picture(de.cleanData(dog), "C:"));
-                    break;
-            
+
+                case 0:
                 default:
-                gw.ReciveMSG(socket.getInetAddress()+"", de.text(de.cleanData(dog)));
+                    control.ReciveText(socket.getInetAddress() + "", de.text(de.cleanData(dog)));
+                    break;
+                case 1:
+                    control.ReciveImage(socket.getInetAddress() + "", null, de.picture(de.cleanData(dog), "C:"));
                     break;
             }
-            //TODO: Output data somewhere
             // close connection
             socket.close();
             in.close();

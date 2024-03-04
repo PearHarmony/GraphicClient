@@ -13,14 +13,15 @@ public class Control {
     // UI
     GraphicWindow window;
 
-    NetworkControler networkControler = new NetworkControler();
+    NetworkControler networkControler;
     Encoder en = new Encoder();
 
-    public Control(){
+    public Control() {
         window = new GraphicWindow(this);
+        networkControler = new NetworkControler(this);
     }
 
-    public void ReciveText(String sender, String msg){
+    public void ReciveText(String sender, String msg) {
         window.ReciveMSG(sender + " -> ich", msg);
     }
 
@@ -47,9 +48,9 @@ public class Control {
         try {
             Image msg = ImageIO.read(path.toFile());
             window.ReciveMSG("ich -> " + address, msg, path);
-            
+
             networkControler.send2Peer("localhost", 10000, en.picture(path));
-            
+
         } catch (Exception e) {
 
         }
