@@ -7,10 +7,11 @@ import org.pearharmony.UI.GraphicWindow;
 public abstract class Message {
     protected String address;
 
-    public Message(String addresse){
+    public Message(String addresse) {
         this.address = addresse;
     }
 
     public abstract void Send(NetworkControler controler, Encoder en);
+
     public abstract void Recive(GraphicWindow window);
 }

@@ -2,12 +2,11 @@ package org.pearharmony.Data.Messages;
 
 import java.nio.file.Path;
 
-
 import org.pearharmony.Network.Encoder;
 import org.pearharmony.Network.NetworkControler;
 import org.pearharmony.UI.GraphicWindow;
 
-public class SoundMessage extends Message{
+public class SoundMessage extends Message {
     private Path path;
 
     public SoundMessage(String addresse, Path path) {
@@ -22,8 +21,7 @@ public class SoundMessage extends Message{
 
     @Override
     public void Recive(GraphicWindow window) {
-        //TODO:I dont know
+        // TODO:I dont know
     }
 
-    
 }

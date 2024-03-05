@@ -31,7 +31,6 @@ public class Handler implements Runnable {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dog = in.readAllBytes();
             switch (de.getType(dog)) {
-
                 case 0:
                 default:
                     control.ReciveText(getIP(), de.text(de.cleanData(dog)));
@@ -40,8 +39,8 @@ public class Handler implements Runnable {
                     control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir")));
                     break;
                 case 2:
-                //TODO:SOUND
-                break;
+                    // TODO:SOUND
+                    break;
             }
             // close connection
             socket.close();

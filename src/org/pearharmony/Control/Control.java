@@ -23,11 +23,11 @@ public class Control {
         networkControler.startListening(10000);
     }
 
-    public void Send(Message msg){
+    public void Send(Message msg) {
         msg.Send(networkControler, en);
     }
 
-    public void Recive(Message msg){
+    public void Recive(Message msg) {
         msg.Recive(window);
     }
 

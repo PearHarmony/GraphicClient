@@ -4,9 +4,9 @@ import org.pearharmony.Network.NetworkControler;
 import org.pearharmony.Network.Encoder;
 import org.pearharmony.UI.GraphicWindow;
 
-public class TextMessage extends Message{
+public class TextMessage extends Message {
     private String data;
-    
+
     public TextMessage(String addresse, String data) {
         super(addresse);
         this.data = data;
