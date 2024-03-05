@@ -26,8 +26,8 @@ public class Messager extends JPanel implements ActionListener {
 
     JScrollPane pane;
     JPanel content = new JPanel();
-    JTextField address = new JTextField(25);
-    JTextField input = new JTextField(25);
+    JTextField address = new JTextField(20);
+    JTextField input = new JTextField(20);
     JButton send;
     JButton imgButton;
 
@@ -74,10 +74,10 @@ public class Messager extends JPanel implements ActionListener {
         input.setToolTipText("Message");
         input.addActionListener(this);
 
-        send = new JButton("Send");
+        send = new JButton("-Send-");
         send.addActionListener(this);
 
-        imgButton = new JButton(" Img ");
+        imgButton = new JButton("Img/Wav");
         imgButton.addActionListener(this);
 
         inputPanel.add(addressInfo);
@@ -85,7 +85,7 @@ public class Messager extends JPanel implements ActionListener {
         inputPanel.add(imgButton);
         inputPanel.add(nameInfo);
         inputPanel.add(input);
-        inputPanel.add(send);        
+        inputPanel.add(send);
 
         add(inputPanel);
     }
@@ -121,7 +121,7 @@ public class Messager extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == send || e.getSource() == input) {
-            if(input.getText() == "")
+            if (input.getText() == "")
                 return;
             String msg = input.getText();
             Message message = new TextMessage(addressList.translateAddress(address.getText()), msg);
@@ -131,23 +131,33 @@ public class Messager extends JPanel implements ActionListener {
             input.setText("");
         } else if (e.getSource() == imgButton) {
             try {
-                File selectedFile = new File("");
+                File selectedFile;
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
-                    System.out.println(selectedFile.toPath().endsWith("*.mp3"));
+                    System.out.println(GetExtention(selectedFile));
+                    String addresse = addressList.translateAddress(address.getText());
 
-                    Message message = new ImageMessage(addressList.translateAddress(address.getText()),
-                            selectedFile.toPath());
+                    if (GetExtention(selectedFile).equals("png")) {
+                        Message message = new ImageMessage(addresse, selectedFile.toPath());
 
-                    Image img = ImageIO.read(selectedFile.toPath().toFile());
-                    AddMessage("ich -> " + addressList.translateAddress(address.getText()), img, selectedFile.toPath());
-                    controll.Send(message);
+                        Image img = ImageIO.read(selectedFile.toPath().toFile());
+                        AddMessage("ich -> " + addresse, img, selectedFile.toPath());
+                        controll.Send(message);
+                    } else if (GetExtention(selectedFile).equals("wav")) {
+                        Message message = new SoundMessage(addresse, selectedFile.toPath());
+
+                        AddSound("ich -> " + addresse, selectedFile.toPath());
+                        controll.Send(message);
+                    } else {
+                        AddMessage("ERROR", "File not Suportet");
+                    }
+
                 }
             } catch (Exception ex) {
-
+                ex.printStackTrace();
             }
         }
     }
@@ -158,5 +168,14 @@ public class Messager extends JPanel implements ActionListener {
 
     public void SetAddressList(AddressList addressList) {
         this.addressList = addressList;
+    }
+
+    private String GetExtention(File file) {
+        String name = file.getName();
+        String[] split = name.split("[.]");
+
+        if (split.length > 0)
+            return split[split.length - 1];
+        return name;
     }
 }
