@@ -39,8 +39,4 @@ public class AudioBox extends JButton implements ActionListener {
             clip.start();
         }
     }
-
-    private void init(){
-        
-    }
 }
