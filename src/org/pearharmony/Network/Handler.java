@@ -39,6 +39,9 @@ public class Handler implements Runnable {
                 case 1:
                     control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.home")));
                     break;
+                case 2:
+                //TODO:SOUND
+                break;
             }
             // close connection
             socket.close();
