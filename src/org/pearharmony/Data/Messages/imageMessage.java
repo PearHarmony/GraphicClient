@@ -9,10 +9,10 @@ import org.pearharmony.Network.Encoder;
 import org.pearharmony.Network.NetworkControler;
 import org.pearharmony.UI.GraphicWindow;
 
-public class imageMessage extends Message{
+public class ImageMessage extends Message{
     private Path path;
 
-    public imageMessage(String addresse, Path path) {
+    public ImageMessage(String addresse, Path path) {
         super(addresse);
         this.path = path;
     }

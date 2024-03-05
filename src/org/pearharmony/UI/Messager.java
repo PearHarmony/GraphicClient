@@ -15,6 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.pearharmony.Control.Control;
+import org.pearharmony.Data.Messages.ImageMessage;
+import org.pearharmony.Data.Messages.Message;
+import org.pearharmony.Data.Messages.TextMessage;
 
 public class Messager extends JPanel implements ActionListener {
     AddressList addressList;
@@ -104,13 +107,22 @@ public class Messager extends JPanel implements ActionListener {
         content.add(picture);
 
         grapWindow.Update();
+
+    }
+
+    public void AddSound(String sender, Path path) {
+        content.add(new AudioBox(sender, path));
+
+        grapWindow.Update();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == send || e.getSource() == input) {
             String msg = input.getText();
-            controll.SendText(addressList.translateAddress(address.getText()), msg);
+            Message message = new TextMessage(addressList.translateAddress(address.getText()), msg);
+            controll.Send(message);
+
             input.setText("");
         } else if (e.getSource() == imgButton) {
             try {
@@ -121,7 +133,9 @@ public class Messager extends JPanel implements ActionListener {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
 
-                    controll.SendImage(addressList.translateAddress(address.getText()), selectedFile.toPath());
+                    Message message = new ImageMessage(addressList.translateAddress(address.getText()),
+                            selectedFile.toPath());
+                    controll.Send(message);
                 }
             } catch (Exception ex) {
 
