@@ -2,6 +2,8 @@ package org.pearharmony.Data.Messages;
 
 import java.nio.file.Path;
 
+import javax.imageio.ImageIO;
+
 import org.pearharmony.Network.Encoder;
 import org.pearharmony.Network.NetworkControler;
 import org.pearharmony.UI.GraphicWindow;
@@ -16,14 +18,12 @@ public class SoundMessage extends Message{
 
     @Override
     public void Send(NetworkControler controler, Encoder en) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Send'");
+        controler.send2Peer(address, 10000, en.sound(path));
     }
 
     @Override
     public void Recive(GraphicWindow window) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Recive'");
+        //TODO:I dont know
     }
 
     
