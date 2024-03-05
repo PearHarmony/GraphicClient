@@ -37,7 +37,7 @@ public class Handler implements Runnable {
                     control.ReciveText(getIP(), de.text(de.cleanData(dog)));
                     break;
                 case 1:
-                    control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.home")));
+                    control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir")));
                     break;
                 case 2:
                 //TODO:SOUND

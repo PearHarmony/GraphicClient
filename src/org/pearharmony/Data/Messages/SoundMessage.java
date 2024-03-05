@@ -2,7 +2,6 @@ package org.pearharmony.Data.Messages;
 
 import java.nio.file.Path;
 
-import javax.imageio.ImageIO;
 
 import org.pearharmony.Network.Encoder;
 import org.pearharmony.Network.NetworkControler;
