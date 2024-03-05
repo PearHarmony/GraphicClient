@@ -4,7 +4,9 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
-
+import org.pearharmony.Data.Messages.ImageMessage;
+import org.pearharmony.Data.Messages.SoundMessage;
+import org.pearharmony.Data.Messages.TextMessage;
 import org.pearharmony.Control.*;
 
 public class Handler implements Runnable {
@@ -31,15 +33,20 @@ public class Handler implements Runnable {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dog = in.readAllBytes();
             switch (de.getType(dog)) {
-                case 0x00:
                 default:
-                    control.ReciveText(getIP(), de.text(de.cleanData(dog)));
+                control.Recive(new TextMessage(getIP(),dog.toString()));
+                break;
+                case 0x00:
+                    control.Recive(
+                            new TextMessage(getIP(), de.text(de.cleanData(dog))));
                     break;
                 case 0x01:
-                    control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir")));
+                    control.Recive(
+                            new ImageMessage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir"))));
                     break;
                 case 0x02:
-                    // TODO:SOUND
+                    control.Recive(
+                            new SoundMessage(getIP(), de.sound(dog, System.getProperty("user.dir"))));
                     break;
             }
             // close connection
