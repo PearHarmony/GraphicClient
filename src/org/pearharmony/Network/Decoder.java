@@ -25,8 +25,8 @@ public class Decoder {
     }
 
     public Path picture(byte[] _data, String _path) {
-        Path path = Paths.get(_path, System.currentTimeMillis() + ".png");
         try {
+            Path path = Paths.get(_path, System.currentTimeMillis() + ".png");
             Files.write(path, _data, StandardOpenOption.CREATE);
             return path;
         } catch (IOException e) {

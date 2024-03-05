@@ -33,18 +33,20 @@ public class Handler implements Runnable {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dog = in.readAllBytes();
             switch (de.getType(dog)) {
-                case 0x00:
                 default:
+                control.Recive(new TextMessage(getIP(),dog.toString()));
+                break;
+                case 0x00:
                     control.Recive(
                             new TextMessage(getIP(), de.text(de.cleanData(dog))));
                     break;
                 case 0x01:
                     control.Recive(
-                            new ImageMessage(getIP(), de.picture(de.cleanData(dog), System.getProperty("home.dir"))));
+                            new ImageMessage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir"))));
                     break;
                 case 0x02:
                     control.Recive(
-                            new SoundMessage(getIP(), de.sound(dog, System.getProperty("home.dir"))));
+                            new SoundMessage(getIP(), de.sound(dog, System.getProperty("user.dir"))));
                     break;
             }
             // close connection
