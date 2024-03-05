@@ -10,6 +10,7 @@ import org.pearharmony.Network.NetworkControler;
 import org.pearharmony.UI.GraphicWindow;
 
 public class ImageMessage extends Message{
+
     private Path path;
 
     public ImageMessage(String addresse, Path path) {
@@ -31,5 +32,5 @@ public class ImageMessage extends Message{
 
         }
     }
-    
+
 }

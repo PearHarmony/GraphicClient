@@ -34,4 +34,15 @@ public class Decoder {
             return null;
         }
     }
+
+    public Path sound(byte[] _data, String _path) {
+        Path path = Paths.get(_path, System.currentTimeMillis() + ".mp3");
+        try {
+            Files.write(path, _data, StandardOpenOption.CREATE);
+            return path;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
