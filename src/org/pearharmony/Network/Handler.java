@@ -31,14 +31,14 @@ public class Handler implements Runnable {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dog = in.readAllBytes();
             switch (de.getType(dog)) {
-                case 0:
+                case 0x00:
                 default:
                     control.ReciveText(getIP(), de.text(de.cleanData(dog)));
                     break;
-                case 1:
+                case 0x01:
                     control.ReciveImage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir")));
                     break;
-                case 2:
+                case 0x02:
                     // TODO:SOUND
                     break;
             }
