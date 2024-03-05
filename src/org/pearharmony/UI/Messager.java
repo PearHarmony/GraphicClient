@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,6 +19,7 @@ import org.pearharmony.Control.Control;
 import org.pearharmony.Data.Messages.ImageMessage;
 import org.pearharmony.Data.Messages.Message;
 import org.pearharmony.Data.Messages.TextMessage;
+import org.pearharmony.Data.Messages.SoundMessage;
 
 public class Messager extends JPanel implements ActionListener {
     AddressList addressList;
@@ -80,10 +82,10 @@ public class Messager extends JPanel implements ActionListener {
 
         inputPanel.add(addressInfo);
         inputPanel.add(address);
-        inputPanel.add(send);
+        inputPanel.add(imgButton);
         inputPanel.add(nameInfo);
         inputPanel.add(input);
-        inputPanel.add(imgButton);
+        inputPanel.add(send);        
 
         add(inputPanel);
     }
@@ -119,8 +121,11 @@ public class Messager extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == send || e.getSource() == input) {
+            if(input.getText() == "")
+                return;
             String msg = input.getText();
             Message message = new TextMessage(addressList.translateAddress(address.getText()), msg);
+            AddMessage(addressList.translateAddress(address.getText()), msg);
             controll.Send(message);
 
             input.setText("");
@@ -132,9 +137,13 @@ public class Messager extends JPanel implements ActionListener {
                 int result = fileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(selectedFile.toPath().endsWith("*.mp3"));
 
                     Message message = new ImageMessage(addressList.translateAddress(address.getText()),
                             selectedFile.toPath());
+
+                    Image img = ImageIO.read(selectedFile.toPath().toFile());
+                    AddMessage("ich -> " + addressList.translateAddress(address.getText()), img, selectedFile.toPath());
                     controll.Send(message);
                 }
             } catch (Exception ex) {

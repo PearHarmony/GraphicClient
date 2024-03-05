@@ -20,7 +20,7 @@ public class AudioBox extends JButton implements ActionListener {
             clip = AudioSystem.getClip();
             clip.open(asj);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
