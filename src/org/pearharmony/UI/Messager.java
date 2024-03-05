@@ -112,8 +112,8 @@ public class Messager extends JPanel implements ActionListener {
 
     }
 
-    public void AddSound(String sender, Path path) {
-        content.add(new AudioBox(sender, path));
+    public void AddSound(String sender, Path path, boolean autoStart) {
+        content.add(new AudioBox(sender, path, autoStart));
 
         grapWindow.Update();
     }
@@ -149,7 +149,7 @@ public class Messager extends JPanel implements ActionListener {
                     } else if (GetExtention(selectedFile).equals("wav")) {
                         Message message = new SoundMessage(addresse, selectedFile.toPath());
 
-                        AddSound("ich -> " + addresse, selectedFile.toPath());
+                        AddSound("ich -> " + addresse, selectedFile.toPath(), false);
                         controll.Send(message);
                     } else {
                         AddMessage("ERROR", "File not Suportet");

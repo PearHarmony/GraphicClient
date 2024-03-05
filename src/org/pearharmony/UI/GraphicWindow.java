@@ -39,7 +39,7 @@ public class GraphicWindow extends JFrame {
     }
 
     public void ReciveSound(String sender, Path path){
-        messager.AddSound(sender, path);
+        messager.AddSound(sender, path, true);
     }
 
     public void Update() {

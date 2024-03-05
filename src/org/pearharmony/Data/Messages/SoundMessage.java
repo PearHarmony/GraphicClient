@@ -21,7 +21,7 @@ public class SoundMessage extends Message {
 
     @Override
     public void Recive(GraphicWindow window) {
-        window.ReciveSound(address, path);
+        window.ReciveSound(address + " -> ich", path);
     }
 
 }

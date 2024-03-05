@@ -12,20 +12,35 @@ import javax.swing.JButton;
 public class AudioBox extends JButton implements ActionListener {
     private Clip clip;
 
-    public AudioBox(String address, Path audio) {
-        setText(address + ": Sound");
+    public AudioBox(String address, Path audio, boolean autoStart) {
+        setText(address + ": Sound (" + audio.toString() + ")");
         addActionListener(this);
         try {
-            AudioInputStream asj = AudioSystem.getAudioInputStream(audio.toFile());
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(audio.toFile());
             clip = AudioSystem.getClip();
-            clip.open(asj);
+            clip.open(inputStream);
+            inputStream.close();
+            if(autoStart){
+                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }                
         } catch (Exception e) {
+            System.out.println(audio.toFile().getName());
             e.printStackTrace();
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        clip.start();
+        if(clip.isRunning()){
+            clip.stop();
+        }else{
+            clip.setMicrosecondPosition(0);
+            clip.start();
+        }
+    }
+
+    private void init(){
+        
     }
 }
