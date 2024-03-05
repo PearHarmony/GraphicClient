@@ -36,7 +36,7 @@ public class Decoder {
     }
 
     public Path sound(byte[] _data, String _path) {
-        Path path = Paths.get(_path, System.currentTimeMillis() + ".mp3");
+        Path path = Paths.get(_path, System.currentTimeMillis() + ".wav");
         try {
             Files.write(path, _data, StandardOpenOption.CREATE);
             return path;
