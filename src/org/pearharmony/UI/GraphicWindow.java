@@ -1,10 +1,11 @@
+// @Daniel
+
 package org.pearharmony.UI;
 
 import javax.swing.*;
 
 import org.pearharmony.Control.Control;
 
-import java.awt.Image;
 import java.nio.file.Path;
 
 public class GraphicWindow extends JFrame {
@@ -34,16 +35,11 @@ public class GraphicWindow extends JFrame {
         messager.AddMessage(sender, msg);
     }
 
-    public void ReciveMSG(String sender, Image msg, Path path) {
-        messager.AddMessage(sender, msg, path);
+    public void ReciveMSG(String sender, Path path) {
+        messager.AddMessage(sender, path);
     }
 
     public void ReciveSound(String sender, Path path){
         messager.AddSound(sender, path, true);
     }
-
-    public void Update() {
-        revalidate();
-    }
-
 }

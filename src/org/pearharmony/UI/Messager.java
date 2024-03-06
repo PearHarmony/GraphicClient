@@ -1,13 +1,13 @@
+// @Daniel
+
 package org.pearharmony.UI;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -19,45 +19,48 @@ import org.pearharmony.Control.Control;
 import org.pearharmony.Data.Messages.ImageMessage;
 import org.pearharmony.Data.Messages.Message;
 import org.pearharmony.Data.Messages.TextMessage;
+import org.pearharmony.UI.CustomBoxes.AudioBox;
+import org.pearharmony.UI.CustomBoxes.PictureBox;
 import org.pearharmony.Data.Messages.SoundMessage;
 
 public class Messager extends JPanel implements ActionListener {
     AddressList addressList;
 
-    JScrollPane pane;
+    JScrollPane messagePane;
     JPanel content = new JPanel();
-    JTextField address = new JTextField(20);
-    JTextField input = new JTextField(20);
-    JButton send;
-    JButton imgButton;
+    JTextField addressInput = new JTextField(20);
+    JTextField textInput = new JTextField(20);
+    JButton sendText;
+    JButton sendFile;
 
     GraphicWindow grapWindow;
-    Control controll;
+    Control control;
 
     public Messager(GraphicWindow window, Control controll) {
         this.grapWindow = window;
-        this.controll = controll;
+        this.control = controll;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBounds(300, 0, 550, 700);
 
         JPanel namePanel = new JPanel();
-        JTextField name2 = new JTextField("Nachrichtenfeld");
-        namePanel.add(name2);
+        JTextField headline = new JTextField("Nachrichtenfeld");
+        headline.setEditable(false);
+        namePanel.add(headline);
         namePanel.setSize(200, 10);
 
         add(namePanel);
 
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        pane = new JScrollPane(content);
-        pane.setWheelScrollingEnabled(true);
-        pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        messagePane = new JScrollPane(content);
+        messagePane.setWheelScrollingEnabled(true);
+        messagePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        messagePane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        pane.setPreferredSize(new Dimension(900, 800));
+        messagePane.setPreferredSize(new Dimension(900, 800));
 
-        add(pane);
+        add(messagePane);
 
         JPanel inputPanel = new JPanel();
         inputPanel.setMaximumSize(new Dimension(450, 70));
@@ -69,23 +72,23 @@ public class Messager extends JPanel implements ActionListener {
         addressInfo.setEditable(false);
         nameInfo.setEditable(false);
 
-        address.setToolTipText("Addresse");
+        addressInput.setToolTipText("Addresse");
 
-        input.setToolTipText("Message");
-        input.addActionListener(this);
+        textInput.setToolTipText("Message");
+        textInput.addActionListener(this);
 
-        send = new JButton("-Send-");
-        send.addActionListener(this);
+        sendText = new JButton("-Send-");
+        sendText.addActionListener(this);
 
-        imgButton = new JButton("Img/Wav");
-        imgButton.addActionListener(this);
+        sendFile = new JButton("Img/Wav");
+        sendFile.addActionListener(this);
 
         inputPanel.add(addressInfo);
-        inputPanel.add(address);
-        inputPanel.add(imgButton);
+        inputPanel.add(addressInput);
+        inputPanel.add(sendFile);
         inputPanel.add(nameInfo);
-        inputPanel.add(input);
-        inputPanel.add(send);
+        inputPanel.add(textInput);
+        inputPanel.add(sendText);
 
         add(inputPanel);
     }
@@ -97,39 +100,33 @@ public class Messager extends JPanel implements ActionListener {
         content.add(newMsg);
 
         if (grapWindow != null)
-            grapWindow.Update();
+            grapWindow.revalidate();
     }
 
-    public void AddMessage(String sender, Image image, Path path) {
-        pictureBox box = new pictureBox(image, path);
+    public void AddMessage(String sender, Path path) {
+        content.add(new PictureBox(sender, path));
 
-        JButton picture = new JButton(sender + ": Bild (" + path.toString() + ")");
-        picture.addActionListener(box);
-        picture.setPreferredSize(new Dimension(490, 25));
-        content.add(picture);
-
-        grapWindow.Update();
-
+        grapWindow.revalidate();
     }
 
     public void AddSound(String sender, Path path, boolean autoStart) {
         content.add(new AudioBox(sender, path, autoStart));
 
-        grapWindow.Update();
+        grapWindow.revalidate();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == send || e.getSource() == input) {
-            if (input.getText() == "")
+        if (e.getSource() == sendText || e.getSource() == textInput) {
+            if (textInput.getText() == "")
                 return;
-            String msg = input.getText();
-            Message message = new TextMessage(addressList.translateAddress(address.getText()), msg);
-            AddMessage(addressList.translateAddress(address.getText()), msg);
-            controll.Send(message);
+            String msg = textInput.getText();
+            Message message = new TextMessage(addressList.translateAddress(addressInput.getText()), msg);
+            AddMessage(addressList.translateAddress(addressInput.getText()), msg);
+            control.Send(message);
 
-            input.setText("");
-        } else if (e.getSource() == imgButton) {
+            textInput.setText("");
+        } else if (e.getSource() == sendFile) {
             try {
                 File selectedFile;
                 JFileChooser fileChooser = new JFileChooser();
@@ -138,21 +135,21 @@ public class Messager extends JPanel implements ActionListener {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
                     System.out.println(GetExtention(selectedFile));
-                    String addresse = addressList.translateAddress(address.getText());
+                    String addresse = addressList.translateAddress(addressInput.getText());
 
                     String extention = GetExtention(selectedFile);
 
                     if (extention.equals("png")) {
                         Message message = new ImageMessage(addresse, selectedFile.toPath());
 
-                        Image img = ImageIO.read(selectedFile.toPath().toFile());
-                        AddMessage("ich -> " + addresse, img, selectedFile.toPath());
-                        controll.Send(message);
+                        
+                        AddMessage("ich -> " + addresse, selectedFile.toPath());
+                        control.Send(message);
                     } else if (extention.equals("wav")) {
                         Message message = new SoundMessage(addresse, selectedFile.toPath());
 
                         AddSound("ich -> " + addresse, selectedFile.toPath(), false);
-                        controll.Send(message);
+                        control.Send(message);
                     } else {
                         AddMessage("ERROR", "File not Suportet");
                     }
@@ -165,7 +162,7 @@ public class Messager extends JPanel implements ActionListener {
     }
 
     public void SetAddres(String address) {
-        this.address.setText(address);
+        this.addressInput.setText(address);
     }
 
     public void SetAddressList(AddressList addressList) {

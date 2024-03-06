@@ -1,23 +1,35 @@
-package org.pearharmony.UI;
+// @Daniel
+
+package org.pearharmony.UI.CustomBoxes;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.nio.file.Path;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class pictureBox implements ActionListener {
+public class PictureBox extends JButton implements ActionListener {
 
     Image img;
     Path path;
 
-    public pictureBox(Image image, Path path) {
-        img = image;
-        this.path = path;
+    public PictureBox(String sender, Path path) {
+        try {
+            img = ImageIO.read(path.toFile());
+            this.path = path;
+
+            setText(sender + ": Bild (" + path.toString() + ")");
+            addActionListener(this);
+        } catch (IOException e) {
+            setText(sender + ": Bild (Faild To Load)");
+        }
     }
 
     @Override

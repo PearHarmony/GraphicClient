@@ -1,9 +1,10 @@
+// @Daniel
+// edit: Veljko
+
 package org.pearharmony.Data.Messages;
 
-import java.awt.Image;
 import java.nio.file.Path;
 
-import javax.imageio.ImageIO;
 
 import org.pearharmony.Network.Encoder;
 import org.pearharmony.Network.NetworkControler;
@@ -25,12 +26,7 @@ public class ImageMessage extends Message{
 
     @Override
     public void Recive(GraphicWindow window) {
-        try {
-            Image msg = ImageIO.read(path.toFile());
-            window.ReciveMSG("ich -> " + address, msg, path);
-        } catch (Exception e) {
-
-        }
+        window.ReciveMSG("ich -> " + address, path);
     }
 
 }
