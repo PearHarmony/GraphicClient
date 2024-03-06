@@ -46,7 +46,7 @@ public class Handler implements Runnable {
                     break;
                 case 0x02:
                     control.Recive(
-                            new SoundMessage(getIP(), de.sound(dog, System.getProperty("user.dir"))));
+                            new SoundMessage(getIP(), de.sound(de.cleanData(dog), System.getProperty("user.dir"))));
                     break;
             }
             // close connection
