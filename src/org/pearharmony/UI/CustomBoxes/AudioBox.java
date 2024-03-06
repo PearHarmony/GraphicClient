@@ -1,6 +1,6 @@
 // @Daniel
 
-package org.pearharmony.UI;
+package org.pearharmony.UI.CustomBoxes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,21 +14,21 @@ import javax.swing.JButton;
 public class AudioBox extends JButton implements ActionListener {
     private Clip clip;
 
-    public AudioBox(String address, Path audio, boolean autoStart) {
-        setText(address + ": Sound (" + audio.toString() + ")");
-        addActionListener(this);
+    public AudioBox(String address, Path path, boolean autoStart) {
+        
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(audio.toFile());
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(path.toFile());
             clip = AudioSystem.getClip();
             clip.open(inputStream);
             inputStream.close();
             if(autoStart){
                 clip.start();
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }                
+            }     
+            setText(address + ": Sound (" + path.toString() + ")");
+            addActionListener(this);           
         } catch (Exception e) {
-            System.out.println(audio.toFile().getName());
-            e.printStackTrace();
+            setText(address + ": Sound (Faild to Load)");
         }
     }
 
