@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,14 +19,15 @@ import org.pearharmony.Control.Control;
 import org.pearharmony.Data.Messages.ImageMessage;
 import org.pearharmony.Data.Messages.Message;
 import org.pearharmony.Data.Messages.TextMessage;
+import org.pearharmony.Data.Messages.SoundMessage;
 
 public class Messager extends JPanel implements ActionListener {
     AddressList addressList;
 
     JScrollPane pane;
     JPanel content = new JPanel();
-    JTextField address = new JTextField(25);
-    JTextField input = new JTextField(25);
+    JTextField address = new JTextField(20);
+    JTextField input = new JTextField(20);
     JButton send;
     JButton imgButton;
 
@@ -72,18 +74,18 @@ public class Messager extends JPanel implements ActionListener {
         input.setToolTipText("Message");
         input.addActionListener(this);
 
-        send = new JButton("Send");
+        send = new JButton("-Send-");
         send.addActionListener(this);
 
-        imgButton = new JButton(" Img ");
+        imgButton = new JButton("Img/Wav");
         imgButton.addActionListener(this);
 
         inputPanel.add(addressInfo);
         inputPanel.add(address);
-        inputPanel.add(send);
+        inputPanel.add(imgButton);
         inputPanel.add(nameInfo);
         inputPanel.add(input);
-        inputPanel.add(imgButton);
+        inputPanel.add(send);
 
         add(inputPanel);
     }
@@ -110,8 +112,8 @@ public class Messager extends JPanel implements ActionListener {
 
     }
 
-    public void AddSound(String sender, Path path) {
-        content.add(new AudioBox(sender, path));
+    public void AddSound(String sender, Path path, boolean autoStart) {
+        content.add(new AudioBox(sender, path, autoStart));
 
         grapWindow.Update();
     }
@@ -119,26 +121,45 @@ public class Messager extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == send || e.getSource() == input) {
+            if (input.getText() == "")
+                return;
             String msg = input.getText();
             Message message = new TextMessage(addressList.translateAddress(address.getText()), msg);
+            AddMessage(addressList.translateAddress(address.getText()), msg);
             controll.Send(message);
 
             input.setText("");
         } else if (e.getSource() == imgButton) {
             try {
-                File selectedFile = new File("");
+                File selectedFile;
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
+                    System.out.println(GetExtention(selectedFile));
+                    String addresse = addressList.translateAddress(address.getText());
 
-                    Message message = new ImageMessage(addressList.translateAddress(address.getText()),
-                            selectedFile.toPath());
-                    controll.Send(message);
+                    String extention = GetExtention(selectedFile);
+
+                    if (extention.equals("png")) {
+                        Message message = new ImageMessage(addresse, selectedFile.toPath());
+
+                        Image img = ImageIO.read(selectedFile.toPath().toFile());
+                        AddMessage("ich -> " + addresse, img, selectedFile.toPath());
+                        controll.Send(message);
+                    } else if (extention.equals("wav")) {
+                        Message message = new SoundMessage(addresse, selectedFile.toPath());
+
+                        AddSound("ich -> " + addresse, selectedFile.toPath(), false);
+                        controll.Send(message);
+                    } else {
+                        AddMessage("ERROR", "File not Suportet");
+                    }
+
                 }
             } catch (Exception ex) {
-
+                ex.printStackTrace();
             }
         }
     }
@@ -149,5 +170,14 @@ public class Messager extends JPanel implements ActionListener {
 
     public void SetAddressList(AddressList addressList) {
         this.addressList = addressList;
+    }
+
+    private String GetExtention(File file) {
+        String name = file.getName();
+        String[] split = name.split("[.]");
+
+        if (split.length > 0)
+            return split[split.length - 1];
+        return name;
     }
 }

@@ -38,6 +38,10 @@ public class GraphicWindow extends JFrame {
         messager.AddMessage(sender, msg, path);
     }
 
+    public void ReciveSound(String sender, Path path){
+        messager.AddSound(sender, path, true);
+    }
+
     public void Update() {
         revalidate();
     }
