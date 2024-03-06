@@ -140,13 +140,15 @@ public class Messager extends JPanel implements ActionListener {
                     System.out.println(GetExtention(selectedFile));
                     String addresse = addressList.translateAddress(address.getText());
 
-                    if (GetExtention(selectedFile).equals("png")) {
+                    String extention = GetExtention(selectedFile);
+
+                    if (extention.equals("png")) {
                         Message message = new ImageMessage(addresse, selectedFile.toPath());
 
                         Image img = ImageIO.read(selectedFile.toPath().toFile());
                         AddMessage("ich -> " + addresse, img, selectedFile.toPath());
                         controll.Send(message);
-                    } else if (GetExtention(selectedFile).equals("wav")) {
+                    } else if (extention.equals("wav")) {
                         Message message = new SoundMessage(addresse, selectedFile.toPath());
 
                         AddSound("ich -> " + addresse, selectedFile.toPath(), false);
