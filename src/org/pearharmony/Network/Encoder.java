@@ -16,7 +16,7 @@ public class Encoder {
             pack[i + 1] = data[i];
         }
         return pack;
-    }
+    } 
 
     public byte[] picture(String _path, String _filename) {
         try {
