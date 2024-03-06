@@ -1,3 +1,6 @@
+// @Daniel
+// edit: Veljko
+
 package org.pearharmony.Data.Messages;
 
 import java.nio.file.Path;

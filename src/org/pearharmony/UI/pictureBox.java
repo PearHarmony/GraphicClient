@@ -1,3 +1,5 @@
+// @Daniel
+
 package org.pearharmony.UI;
 
 import java.awt.Image;
@@ -10,12 +12,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class pictureBox implements ActionListener {
+public class PictureBox implements ActionListener {
 
     Image img;
     Path path;
 
-    public pictureBox(Image image, Path path) {
+    public PictureBox(Image image, Path path) {
         img = image;
         this.path = path;
     }

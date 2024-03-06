@@ -1,3 +1,5 @@
+// @Daniel
+
 package org.pearharmony.UI;
 
 import java.awt.Dimension;
@@ -101,7 +103,7 @@ public class Messager extends JPanel implements ActionListener {
     }
 
     public void AddMessage(String sender, Image image, Path path) {
-        pictureBox box = new pictureBox(image, path);
+        PictureBox box = new PictureBox(image, path);
 
         JButton picture = new JButton(sender + ": Bild (" + path.toString() + ")");
         picture.addActionListener(box);
