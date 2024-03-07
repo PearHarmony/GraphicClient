@@ -7,19 +7,27 @@ import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.nio.file.Paths;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class AddressList extends JPanel implements ActionListener {
     Messager messager;
 
     private Map<JButton, String> addressList = new HashMap<>();
+
     JPanel AddrSelList = new JPanel();
 
     JTextField newAddrName = new JTextField(15);
     JTextField newAddrIP = new JTextField(15);
     JButton addNewIndex = new JButton("Add");
     JButton removeIndex = new JButton("Remove");
+
 
     public AddressList(Messager messager) {
         this.messager = messager;
@@ -28,8 +36,6 @@ public class AddressList extends JPanel implements ActionListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         AddrSelList.setLayout(new BoxLayout(AddrSelList, BoxLayout.Y_AXIS));
-
-        AddAddress("localhost", "localhost");
 
         JTextField name = new JTextField("Addresses");
         name.setMaximumSize(new Dimension(400, 40));
@@ -65,6 +71,26 @@ public class AddressList extends JPanel implements ActionListener {
         add(name);
         add(list);
         add(addPanel);
+
+        readAddresses();
+    }
+
+    public void readAddresses(){
+        try{            
+            File text = Paths.get(System.getProperty("user.dir"), "addresses").toFile();
+            Scanner reader = new Scanner(text);
+            String adrData[];
+            while (reader.hasNextLine()) {
+                adrData = reader.nextLine().split(" ");
+                JButton button = new JButton(adrData[0]);
+                button.addActionListener(this);
+                addressList.put(button, adrData[1]);
+            }           
+            reader.close();
+            UpdateAddressList();
+        } catch (Exception e){
+
+        }
     }
 
     public void UpdateAddressList() {
@@ -74,6 +100,18 @@ public class AddressList extends JPanel implements ActionListener {
         }
         AddrSelList.repaint();
         revalidate();
+
+        try{            
+            File text = Paths.get(System.getProperty("user.dir"), "addresses").toFile();
+            FileWriter writer = new FileWriter(text);
+
+            for (var iterable_element : addressList.entrySet()) {
+                writer.write(iterable_element.getKey().getText() + " " + iterable_element.getValue() + "\n");
+            }            
+            writer.close();
+        } catch (Exception e){
+
+        }
     }
 
     public void AddAddress(String name, String address) {
@@ -86,10 +124,12 @@ public class AddressList extends JPanel implements ActionListener {
 
     public void RemoveAddress(String name) {
         System.out.println("remove: " + name);
+        
+        JButton[] button = (JButton[])addressList.keySet().toArray();
         for (int i = 0; i < addressList.size(); i++) {
-            if (addressList.values().toArray()[i].equals(name)) {
+            if (button[i].getText() != null && button[i].getText().equals(name)) {
                 System.out.println("found");
-                addressList.remove(addressList.keySet().toArray()[i]);
+                addressList.remove(button[i]);
                 UpdateAddressList();
                 return;
             }
