@@ -24,17 +24,17 @@ import org.pearharmony.UI.CustomBoxes.PictureBox;
 import org.pearharmony.Data.Messages.SoundMessage;
 
 public class Messager extends JPanel implements ActionListener {
-    AddressList addressList;
+    private AddressList addressList;
 
-    JScrollPane messagePane;
-    JPanel content = new JPanel();
-    JTextField addressInput = new JTextField(20);
-    JTextField textInput = new JTextField(20);
-    JButton sendText;
-    JButton sendFile;
+    private JScrollPane messagePane;
+    private JPanel content = new JPanel();
+    private JTextField addressInput = new JTextField(20);
+    private JTextField textInput = new JTextField(20);
+    private JButton sendText;
+    private JButton sendFile;
 
-    GraphicWindow grapWindow;
-    Control control;
+    private GraphicWindow grapWindow;
+    private Control control;
 
     public Messager(GraphicWindow window, Control controll) {
         this.grapWindow = window;
@@ -94,7 +94,7 @@ public class Messager extends JPanel implements ActionListener {
     }
 
     public void AddMessage(String sender, String msg) {
-        JTextField newMsg = new JTextField(sender + ": " + msg);
+        JTextField newMsg = new JTextField(changeAddress(sender) + ": " + msg);
         newMsg.setEditable(false);
         newMsg.setMaximumSize(new Dimension(990, 25));
         content.add(newMsg);
@@ -104,13 +104,13 @@ public class Messager extends JPanel implements ActionListener {
     }
 
     public void AddMessage(String sender, Path path) {
-        content.add(new PictureBox(sender, path));
+        content.add(new PictureBox(changeAddress(sender), path));
 
         grapWindow.revalidate();
     }
 
     public void AddSound(String sender, Path path, boolean autoStart) {
-        content.add(new AudioBox(sender, path, autoStart));
+        content.add(new AudioBox(changeAddress(sender), path, autoStart));
 
         grapWindow.revalidate();
     }
@@ -122,7 +122,7 @@ public class Messager extends JPanel implements ActionListener {
                 return;
             String msg = textInput.getText();
             Message message = new TextMessage(addressList.translateAddress(addressInput.getText()), msg);
-            AddMessage(addressList.translateAddress(addressInput.getText()), msg);
+            AddMessage("ich -> " + addressList.translateAddress(addressInput.getText()), msg);
             control.Send(message);
 
             textInput.setText("");
@@ -142,7 +142,6 @@ public class Messager extends JPanel implements ActionListener {
                     if (extention.equals("png")) {
                         Message message = new ImageMessage(addresse, selectedFile.toPath());
 
-                        
                         AddMessage("ich -> " + addresse, selectedFile.toPath());
                         control.Send(message);
                     } else if (extention.equals("wav")) {
@@ -176,5 +175,15 @@ public class Messager extends JPanel implements ActionListener {
         if (split.length > 0)
             return split[split.length - 1];
         return name;
+    }
+    
+    private String changeAddress(String address){
+        String[] split = address.split(" ");
+
+        address = "";
+        for (String string : split) {
+            address += addressList.translateAddressName(string) + " ";
+        }
+        return address.trim();
     }
 }

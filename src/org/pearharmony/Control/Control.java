@@ -10,10 +10,10 @@ import org.pearharmony.Network.Encoder;
 
 public class Control {
     // UI
-    GraphicWindow window;
+    private GraphicWindow window;
 
-    NetworkControler networkControler;
-    Encoder en = new Encoder();
+    private NetworkControler networkControler;
+    private Encoder en = new Encoder();
 
     public Control() {
         window = new GraphicWindow(this);
@@ -27,10 +27,5 @@ public class Control {
 
     public void Recive(Message msg) {
         msg.Recive(window);
-    }
-
-    @Deprecated
-    public void ReciveText(String sender, String msg) {
-        window.ReciveMSG(sender + " -> ich", msg);
     }
 }
