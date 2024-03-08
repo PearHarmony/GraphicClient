@@ -27,6 +27,7 @@ public class Sender implements Runnable {
 			out = new DataOutputStream(socket.getOutputStream());
 		} catch (UnknownHostException u) {
 			System.out.println(u);
+			
 			return;
 		} catch (IOException i) {
 			System.out.println(i);

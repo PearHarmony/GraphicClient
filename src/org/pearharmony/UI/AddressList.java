@@ -83,18 +83,25 @@ public class AddressList extends JPanel implements ActionListener {
     public void readAddresses(){
         try{            
             File text = Paths.get(System.getProperty("user.dir"), addFileName).toFile();
-            Scanner reader = new Scanner(text);
-            String adrData[];
+            if(!text.exists()){
+                text.createNewFile();
+                addAddress("localhost", "127.0.0.1");
+            } else {
+                Scanner reader = new Scanner(text);
+                String adrData[];
 
-            while (reader.hasNextLine()) {
-                adrData = reader.nextLine().split(" ");
-                JButton button = new JButton(adrData[0]);
-                button.addActionListener(this);
-                addressList.add(new SimpleEntry<JButton,String>(button, adrData[1]));
-            }           
-            reader.close();
+                while (reader.hasNextLine()) {
+                    adrData = reader.nextLine().split(" ");
+                    JButton button = new JButton(adrData[0]);
+                    button.addActionListener(this);
+                    addressList.add(new SimpleEntry<JButton,String>(button, adrData[1]));
+                }           
+                reader.close();
+            }
+
             updateAddressList();
         } catch (Exception e){
+            
             messager.addMessage("ERROR", e.toString());
         }
     }
