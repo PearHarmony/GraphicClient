@@ -16,14 +16,14 @@ public class Handler implements Runnable {
     private Decoder de = new Decoder();
     private Control control;
 
-    byte[] dog;
+    byte[] dog;//is called dog becouse rng decided to call it so
 
     public Handler(Socket _socket, Control _control) {
         socket = _socket;
         control = _control;
     }
 
-    public String getIP() {
+    public String getIP() {//gets clean ip string
         String string = socket.getInetAddress() + "";
         return string.replace("/", "");
     }
@@ -33,7 +33,7 @@ public class Handler implements Runnable {
         try {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             dog = in.readAllBytes();
-            switch (de.getType(dog)) {
+            switch (de.getType(dog)) {//decides based on type how to decode
                 default:
                 control.Recive(new TextMessage(getIP(),dog.toString()));
                 break;
@@ -44,11 +44,11 @@ public class Handler implements Runnable {
                     break;
                 case 0x01:
                     control.Recive(
-                            new ImageMessage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir"))));
+                            new ImageMessage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir"))));//crates new imagemessage that is shown
                     break;
                 case 0x02:
                     control.Recive(
-                            new SoundMessage(getIP(), de.sound(de.cleanData(dog), System.getProperty("user.dir"))));
+                            new SoundMessage(getIP(), de.sound(de.cleanData(dog), System.getProperty("user.dir"))));//crates new soundmessage that is shown
                     break;
             }
             // close connection

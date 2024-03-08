@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Encoder {
+    //encodes a string to a byte array but sets the first byte to a type id
     public byte[] text(String _string) {
         byte[] data = _string.getBytes(StandardCharsets.UTF_8);
         byte[] pack = new byte[data.length + 1];
@@ -18,6 +19,7 @@ public class Encoder {
         return pack;
     } 
 
+    //encodes a picture from a path to a byte array but sets the first byte to a type id
     public byte[] picture(String _path, String _filename) {
         try {
             byte[] data = Files.readAllBytes(Paths.get(_path, _filename));
@@ -33,6 +35,7 @@ public class Encoder {
         }
     }
 
+    //encodes a picture from a path to a byte array but sets the first byte to a type id
     public byte[] picture(Path _path) {
         try {
             byte[] data = Files.readAllBytes(_path);
@@ -48,6 +51,7 @@ public class Encoder {
         }
     }
 
+    //encodes a wav file from a path to a byte array but sets the first byte to a type id
     public byte[] sound(String _path, String _filename) {
         try {
             byte[] data = Files.readAllBytes(Paths.get(_path, _filename));
@@ -63,6 +67,7 @@ public class Encoder {
         }
     }
 
+    //encodes a wav file from a path to a byte array but sets the first byte to a type id
     public byte[] sound(Path _path) {
         try {
             byte[] data = Files.readAllBytes(_path);
