@@ -14,7 +14,7 @@ public abstract class Message {
         this.address = addresse;
     }
 
-    public abstract void Send(NetworkControler controler, Encoder en);
+    public abstract void send(NetworkControler controler, Encoder en);
 
-    public abstract void Recive(GraphicWindow window);
+    public abstract void recive(GraphicWindow window);
 }

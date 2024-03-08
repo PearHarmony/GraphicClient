@@ -93,13 +93,13 @@ public class AddressList extends JPanel implements ActionListener {
                 addressList.add(new SimpleEntry<JButton,String>(button, adrData[1]));
             }           
             reader.close();
-            UpdateAddressList();
+            updateAddressList();
         } catch (Exception e){
-            messager.AddMessage("ERROR", e.toString());
+            messager.addMessage("ERROR", e.toString());
         }
     }
 
-    public void UpdateAddressList() {
+    public void updateAddressList() {
         AddrSelList.removeAll();
 
         addressList.forEach(a -> AddrSelList.add(a.getKey()));
@@ -115,34 +115,34 @@ public class AddressList extends JPanel implements ActionListener {
                 try {
                     writer.write(a.getKey().getText() + " " + a.getValue() + "\n");
                 } catch (IOException e) {
-                    messager.AddMessage("ERROR", e.toString());
+                    messager.addMessage("ERROR", e.toString());
                 }
             });
          
             writer.close();
         } catch (Exception e){
-            messager.AddMessage("ERROR", e.toString());
+            messager.addMessage("ERROR", e.toString());
         }
     }
 
-    public void AddAddress(String name, String address) {
+    public void addAddress(String name, String address) {
         JButton button = new JButton(name);
         button.addActionListener(this);
         addressList.add(new SimpleEntry<JButton,String>(button, address));
 
-        UpdateAddressList();
+        updateAddressList();
     }
 
-    public void RemoveAddress(String name) {
+    public void removeAddress(String name) {
         // get the first Entry of the Butten with the name
         Optional<Entry<JButton, String>> entry = addressList.stream()
                 .filter(obj -> obj.getKey().getText().equals(name)).findFirst();
 
         if(entry != null && entry.isPresent()){
             addressList.remove(entry.get());
-            UpdateAddressList();
+            updateAddressList();
         } else {
-            messager.AddMessage("Addresslist", "");
+            messager.addMessage("Addresslist", "");
         }
     }
 
@@ -171,19 +171,21 @@ public class AddressList extends JPanel implements ActionListener {
         // address button
         addressList.forEach(a -> { 
             if (a.getKey().equals(e.getSource()))
-                messager.SetAddres(a.getValue());
+                messager.setAddres(a.getValue());
         });
 
-        if (e.getSource() == addNewIndex) {// Add new address
+        if (e.getSource() == addNewIndex) {
+            // Add new address
             if (newAddrName.getText().length() > 0 && newAddrIP.getText().length() > 0 &&           // ip or name cant be empty
                 !newAddrName.getText().contains(" ") && !newAddrIP.getText().contains(" "))     // ip and name cannot contain spaces
             {
-                AddAddress(newAddrName.getText(), newAddrIP.getText());
+                addAddress(newAddrName.getText(), newAddrIP.getText());
                 newAddrName.setText("");
                 newAddrIP.setText("");
             }
-        } else if (e.getSource() == removeIndex) { // remove address
-            RemoveAddress(newAddrName.getText());
+        } else if (e.getSource() == removeIndex) {
+             // remove address
+            removeAddress(newAddrName.getText());
             newAddrName.setText("");
             newAddrIP.setText("");
         }

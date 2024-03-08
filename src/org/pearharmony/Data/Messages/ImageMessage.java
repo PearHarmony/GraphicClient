@@ -20,13 +20,13 @@ public class ImageMessage extends Message{
     }
 
     @Override
-    public void Send(NetworkControler controler, Encoder en) {
+    public void send(NetworkControler controler, Encoder en) {
         controler.send2Peer(address, 10000, en.picture(path));
     }
 
     @Override
-    public void Recive(GraphicWindow window) {
-        window.ReciveImage("ich -> " + address, path);
+    public void recive(GraphicWindow window) {
+        window.reciveImage("ich -> " + address, path);
     }
 
 }

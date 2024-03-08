@@ -16,14 +16,14 @@ public class GraphicWindow extends JFrame {
     public GraphicWindow(Control cont) {
         setTitle("PearHarmony");
 
-        setSize(870, 750);
+        setSize(870, 760);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // init sub Parts
         messager = new Messager(this, cont);
         addressList = new AddressList(messager);
-        messager.SetAddressList(addressList);
+        messager.setAddressList(addressList);
 
         add(messager);
         add(addressList);
@@ -32,16 +32,16 @@ public class GraphicWindow extends JFrame {
         setVisible(true);
     }
 
-    public void ReciveMSG(String sender, String msg) {
-        messager.AddMessage(sender, msg);
+    public void reciveMSG(String sender, String msg) {
+        messager.addMessage(sender, msg);
     }
 
-    public void ReciveImage(String sender, Path path) {
-        messager.AddMessage(sender, path);
+    public void reciveImage(String sender, Path path) {
+        messager.addMessage(sender, path);
     }
 
-    public void ReciveSound(String sender, Path path){
-        messager.AddSound(sender, path, true);
+    public void reciveSound(String sender, Path path){
+        messager.addSound(sender, path, true);
     }
     
 }

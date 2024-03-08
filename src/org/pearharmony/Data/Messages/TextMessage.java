@@ -16,13 +16,13 @@ public class TextMessage extends Message {
     }
 
     @Override
-    public void Send(NetworkControler controler, Encoder en) {
+    public void send(NetworkControler controler, Encoder en) {
         controler.send2Peer(address, 10000, en.text(data));
     }
 
     @Override
-    public void Recive(GraphicWindow window) {
-        window.ReciveMSG(address + " -> ich", data);
+    public void recive(GraphicWindow window) {
+        window.reciveMSG(address + " -> ich", data);
     }
 
 }

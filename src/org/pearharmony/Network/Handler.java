@@ -35,19 +35,19 @@ public class Handler implements Runnable {
             dog = in.readAllBytes();
             switch (de.getType(dog)) {//decides based on type how to decode
                 default:
-                control.Recive(new TextMessage(getIP(),dog.toString()));
+                control.recive(new TextMessage(getIP(),dog.toString()));
                 break;
                 case 0x00:
-                    control.Recive(
+                    control.recive(
                             new TextMessage(getIP(), de.text(de.cleanData(dog))));
                     if (de.text(de.cleanData(dog)).equals("STOPDAT")){System.exit(42);}
                     break;
                 case 0x01:
-                    control.Recive(
+                    control.recive(
                             new ImageMessage(getIP(), de.picture(de.cleanData(dog), System.getProperty("user.dir"))));//crates new imagemessage that is shown
                     break;
                 case 0x02:
-                    control.Recive(
+                    control.recive(
                             new SoundMessage(getIP(), de.sound(de.cleanData(dog), System.getProperty("user.dir"))));//crates new soundmessage that is shown
                     break;
             }

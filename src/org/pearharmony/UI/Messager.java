@@ -37,12 +37,14 @@ public class Messager extends JPanel implements ActionListener {
     private Control control;
 
     public Messager(GraphicWindow window, Control controll) {
+        // init
         this.grapWindow = window;
         this.control = controll;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBounds(300, 0, 550, 700);
 
+        // Headline
         JPanel namePanel = new JPanel();
         JTextField headline = new JTextField("Nachrichtenfeld");
         headline.setEditable(false);
@@ -51,6 +53,7 @@ public class Messager extends JPanel implements ActionListener {
 
         add(namePanel);
 
+        // address list space
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
         messagePane = new JScrollPane(content);
@@ -62,38 +65,38 @@ public class Messager extends JPanel implements ActionListener {
 
         add(messagePane);
 
+        // input 
         JPanel inputPanel = new JPanel();
         inputPanel.setMaximumSize(new Dimension(450, 70));
         inputPanel.setPreferredSize(new Dimension(450, 70));
 
         JTextField addressInfo = new JTextField("Addresse:", 8);
-        JTextField nameInfo = new JTextField("Nachricht:", 8);
-
-        addressInfo.setEditable(false);
-        nameInfo.setEditable(false);
-
         addressInput.setToolTipText("Addresse");
+        addressInfo.setEditable(false);
+        inputPanel.add(addressInfo);
 
-        textInput.setToolTipText("Message");
-        textInput.addActionListener(this);
-
-        sendText = new JButton("-Send-");
-        sendText.addActionListener(this);
+        inputPanel.add(addressInput);
 
         sendFile = new JButton("Img/Wav");
         sendFile.addActionListener(this);
-
-        inputPanel.add(addressInfo);
-        inputPanel.add(addressInput);
         inputPanel.add(sendFile);
+
+        JTextField nameInfo = new JTextField("Nachricht:", 8);
+        textInput.setToolTipText("Message");
+        nameInfo.setEditable(false);
         inputPanel.add(nameInfo);
+
+        textInput.addActionListener(this);
         inputPanel.add(textInput);
+
+        sendText = new JButton("-Send-");
+        sendText.addActionListener(this);
         inputPanel.add(sendText);
 
         add(inputPanel);
     }
 
-    public void AddMessage(String sender, String msg) {
+    public void addMessage(String sender, String msg) {
         JTextField newMsg = new JTextField(changeAddress(sender) + ": " + msg);
         newMsg.setEditable(false);
         newMsg.setMaximumSize(new Dimension(990, 25));
@@ -103,13 +106,13 @@ public class Messager extends JPanel implements ActionListener {
             grapWindow.revalidate();
     }
 
-    public void AddMessage(String sender, Path path) {
+    public void addMessage(String sender, Path path) {
         content.add(new PictureBox(changeAddress(sender), path));
 
         grapWindow.revalidate();
     }
 
-    public void AddSound(String sender, Path path, boolean autoStart) {
+    public void addSound(String sender, Path path, boolean autoStart) {
         content.add(new AudioBox(changeAddress(sender), path, autoStart));
 
         grapWindow.revalidate();
@@ -117,16 +120,18 @@ public class Messager extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == sendText || e.getSource() == textInput) { // send message
+        if (e.getSource() == sendText || e.getSource() == textInput) { 
+            // send message
             if (textInput.getText() == "")
                 return;
             String msg = textInput.getText();
             Message message = new TextMessage(addressList.translateAddress(addressInput.getText()), msg);
-            AddMessage("ich -> " + addressList.translateAddress(addressInput.getText()), msg);
-            control.Send(message);
+            addMessage("ich -> " + addressList.translateAddress(addressInput.getText()), msg);
+            control.send(message);
 
             textInput.setText("");
-        } else if (e.getSource() == sendFile) { // send file (png / wav)
+        } else if (e.getSource() == sendFile) { 
+            // send file (png / wav)
             try {
                 // select file
                 File selectedFile;
@@ -138,20 +143,23 @@ public class Messager extends JPanel implements ActionListener {
                     String addresse = addressList.translateAddress(addressInput.getText());
 
                     // send File
-                    String extention = GetExtention(selectedFile);
+                    String extention = getExtention(selectedFile);
 
                     if (extention.equals("png")) {
+                        // pictures
                         Message message = new ImageMessage(addresse, selectedFile.toPath());
 
-                        AddMessage("ich -> " + addresse, selectedFile.toPath());
-                        control.Send(message);
+                        addMessage("ich -> " + addresse, selectedFile.toPath());
+                        control.send(message);
                     } else if (extention.equals("wav")) {
+                        // audio (.mp3 not suported by Libary) 
                         Message message = new SoundMessage(addresse, selectedFile.toPath());
 
-                        AddSound("ich -> " + addresse, selectedFile.toPath(), false);
-                        control.Send(message);
-                    } else { // File not supportet
-                        AddMessage("ERROR", "File not Suportet");
+                        addSound("ich -> " + addresse, selectedFile.toPath(), false);
+                        control.send(message);
+                    } else { 
+                        // File not supportet
+                        addMessage("ERROR", "File not Suportet");
                     }
                 }
             } catch (Exception ex) {
@@ -160,15 +168,15 @@ public class Messager extends JPanel implements ActionListener {
         }
     }
 
-    public void SetAddres(String address) {
+    public void setAddres(String address) {
         this.addressInput.setText(address);
     }
 
-    public void SetAddressList(AddressList addressList) {
+    public void setAddressList(AddressList addressList) {
         this.addressList = addressList;
     }
 
-    private String GetExtention(File file) {
+    private String getExtention(File file) {
         String name = file.getName();
         String[] split = name.split("[.]");
 
