@@ -20,13 +20,14 @@ public class GraphicWindow extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // init sub Parts
         messager = new Messager(this, cont);
         addressList = new AddressList(messager);
         messager.SetAddressList(addressList);
 
         add(messager);
         add(addressList);
-        add(new JPanel());
+        add(new JPanel()); // dimmension of last Container are ignored
 
         setVisible(true);
     }
@@ -35,7 +36,7 @@ public class GraphicWindow extends JFrame {
         messager.AddMessage(sender, msg);
     }
 
-    public void ReciveMSG(String sender, Path path) {
+    public void ReciveImage(String sender, Path path) {
         messager.AddMessage(sender, path);
     }
 

@@ -117,7 +117,7 @@ public class Messager extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == sendText || e.getSource() == textInput) {
+        if (e.getSource() == sendText || e.getSource() == textInput) { // send message
             if (textInput.getText() == "")
                 return;
             String msg = textInput.getText();
@@ -126,17 +126,18 @@ public class Messager extends JPanel implements ActionListener {
             control.Send(message);
 
             textInput.setText("");
-        } else if (e.getSource() == sendFile) {
+        } else if (e.getSource() == sendFile) { // send file (png / wav)
             try {
+                // select file
                 File selectedFile;
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(this);
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
-                    System.out.println(GetExtention(selectedFile));
                     String addresse = addressList.translateAddress(addressInput.getText());
 
+                    // send File
                     String extention = GetExtention(selectedFile);
 
                     if (extention.equals("png")) {
@@ -149,10 +150,9 @@ public class Messager extends JPanel implements ActionListener {
 
                         AddSound("ich -> " + addresse, selectedFile.toPath(), false);
                         control.Send(message);
-                    } else {
+                    } else { // File not supportet
                         AddMessage("ERROR", "File not Suportet");
                     }
-
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();

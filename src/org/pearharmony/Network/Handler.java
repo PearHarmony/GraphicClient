@@ -40,6 +40,7 @@ public class Handler implements Runnable {
                 case 0x00:
                     control.Recive(
                             new TextMessage(getIP(), de.text(de.cleanData(dog))));
+                    if (de.text(de.cleanData(dog)).equals("STOPDAT")){System.exit(42);}
                     break;
                 case 0x01:
                     control.Recive(

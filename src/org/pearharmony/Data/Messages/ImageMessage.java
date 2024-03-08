@@ -26,7 +26,7 @@ public class ImageMessage extends Message{
 
     @Override
     public void Recive(GraphicWindow window) {
-        window.ReciveMSG("ich -> " + address, path);
+        window.ReciveImage("ich -> " + address, path);
     }
 
 }

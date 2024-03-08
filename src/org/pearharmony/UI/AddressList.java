@@ -31,21 +31,26 @@ public class AddressList extends JPanel implements ActionListener {
     private JButton removeIndex = new JButton("Remove");
 
     public AddressList(Messager messager) {
+        // init basic
         this.messager = messager;
         setBounds(0, 0, 300, 700);
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         AddrSelList.setLayout(new BoxLayout(AddrSelList, BoxLayout.Y_AXIS));
 
+        // Headline
         JTextField name = new JTextField("Addressen");
         name.setMaximumSize(new Dimension(400, 40));
         name.setEditable(false);
+        add(name);
 
+        // Text Panel
         JScrollPane list = new JScrollPane(AddrSelList);
         list.setWheelScrollingEnabled(true);
         list.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(list);
 
+        // Input
         JPanel addPanel = new JPanel();
         addPanel.setMaximumSize(new Dimension(400, 90));
         addPanel.setPreferredSize(new Dimension(400, 90));
@@ -53,24 +58,23 @@ public class AddressList extends JPanel implements ActionListener {
         addNewIndex.addActionListener(this);
         removeIndex.addActionListener(this);
 
-        JTextField adr = new JTextField("Addresse:", 8);
         JTextField nam = new JTextField("Name:", 8);
-
-        adr.setEditable(false);
         nam.setEditable(false);
-
-        newAddrName.setToolTipText("Name");
-        newAddrIP.setToolTipText("IP");
-
         addPanel.add(nam);
+        
+        newAddrName.setToolTipText("Name");
         addPanel.add(newAddrName);
+
+        JTextField adr = new JTextField("Addresse:", 8);
+        adr.setEditable(false);
         addPanel.add(adr);
+
+        newAddrIP.setToolTipText("IP");
         addPanel.add(newAddrIP);
+
         addPanel.add(addNewIndex);
         addPanel.add(removeIndex);
 
-        add(name);
-        add(list);
         add(addPanel);
 
         readAddresses();
@@ -81,6 +85,7 @@ public class AddressList extends JPanel implements ActionListener {
             File text = Paths.get(System.getProperty("user.dir"), addFileName).toFile();
             Scanner reader = new Scanner(text);
             String adrData[];
+
             while (reader.hasNextLine()) {
                 adrData = reader.nextLine().split(" ");
                 JButton button = new JButton(adrData[0]);
@@ -90,7 +95,7 @@ public class AddressList extends JPanel implements ActionListener {
             reader.close();
             UpdateAddressList();
         } catch (Exception e){
-
+            messager.AddMessage("ERROR", e.toString());
         }
     }
 
@@ -110,13 +115,13 @@ public class AddressList extends JPanel implements ActionListener {
                 try {
                     writer.write(a.getKey().getText() + " " + a.getValue() + "\n");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    messager.AddMessage("ERROR", e.toString());
                 }
             });
          
             writer.close();
         } catch (Exception e){
-
+            messager.AddMessage("ERROR", e.toString());
         }
     }
 
@@ -129,17 +134,20 @@ public class AddressList extends JPanel implements ActionListener {
     }
 
     public void RemoveAddress(String name) {
-        // get Entry of the Butten with the name
+        // get the first Entry of the Butten with the name
         Optional<Entry<JButton, String>> entry = addressList.stream()
                 .filter(obj -> obj.getKey().getText().equals(name)).findFirst();
 
-        if(entry != null && entry.isPresent())
-        addressList.remove(entry.get());
-        UpdateAddressList();
+        if(entry != null && entry.isPresent()){
+            addressList.remove(entry.get());
+            UpdateAddressList();
+        } else {
+            messager.AddMessage("Addresslist", "");
+        }
     }
 
     public String translateAddress(String ip) {
-        // get Entry of the Butten with the ip
+        // get the first Entry of the Butten with the ip
         Optional<Entry<JButton, String>> entry = addressList.stream()
                 .filter(obj -> obj.getKey().getText().equals(ip)).findFirst();
 
@@ -160,11 +168,13 @@ public class AddressList extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // address button
         addressList.forEach(a -> { 
             if (a.getKey().equals(e.getSource()))
                 messager.SetAddres(a.getValue());
         });
-        if (e.getSource() == addNewIndex) {
+
+        if (e.getSource() == addNewIndex) {// Add new address
             if (newAddrName.getText().length() > 0 && newAddrIP.getText().length() > 0 &&           // ip or name cant be empty
                 !newAddrName.getText().contains(" ") && !newAddrIP.getText().contains(" "))     // ip and name cannot contain spaces
             {
@@ -172,7 +182,7 @@ public class AddressList extends JPanel implements ActionListener {
                 newAddrName.setText("");
                 newAddrIP.setText("");
             }
-        } else if (e.getSource() == removeIndex) {
+        } else if (e.getSource() == removeIndex) { // remove address
             RemoveAddress(newAddrName.getText());
             newAddrName.setText("");
             newAddrIP.setText("");
