@@ -1,7 +1,6 @@
 // @Veljko
 package org.pearharmony.Network;
 
-// A Java program for a Client
 import java.io.*;
 import java.net.*;
 
@@ -34,7 +33,7 @@ public class Sender implements Runnable {
 			return;
 		}
 
-		try {
+		try {//close connection
 			out.write(data);
 			out.close();
 			socket.close();
