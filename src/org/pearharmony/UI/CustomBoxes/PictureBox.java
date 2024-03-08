@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 
 public class PictureBox extends JButton implements ActionListener {
 
-    Image img;
-    Path path;
+    private Image img;
+    private Path path;
 
     public PictureBox(String sender, Path path) {
         try {

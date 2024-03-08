@@ -10,8 +10,8 @@ import java.nio.file.Path;
 
 public class GraphicWindow extends JFrame {
 
-    Messager messager;
-    AddressList addressList;
+    private Messager messager;
+    private AddressList addressList;
 
     public GraphicWindow(Control cont) {
         setTitle("PearHarmony");
@@ -42,4 +42,5 @@ public class GraphicWindow extends JFrame {
     public void ReciveSound(String sender, Path path){
         messager.AddSound(sender, path, true);
     }
+    
 }
