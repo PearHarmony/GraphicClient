@@ -23,7 +23,6 @@ public class AddressList extends JPanel implements ActionListener {
 
     private List<Entry<JButton, String>> addressList = new ArrayList<>();
     
-
     private JPanel AddrSelList = new JPanel();
     private JTextField newAddrName = new JTextField(15);
     private JTextField newAddrIP = new JTextField(15);
@@ -88,20 +87,19 @@ public class AddressList extends JPanel implements ActionListener {
                 addAddress("localhost", "127.0.0.1");
             } else {
                 Scanner reader = new Scanner(text);
-                String adrData[];
+                reader.useDelimiter("#");
 
-                while (reader.hasNextLine()) {
-                    adrData = reader.nextLine().split(" ");
-                    JButton button = new JButton(adrData[0]);
+                while (reader.hasNext()) {
+                    JButton button = new JButton(reader.next());
                     button.addActionListener(this);
-                    addressList.add(new SimpleEntry<JButton,String>(button, adrData[1]));
+                    if(reader.hasNext())
+                    addressList.add(new SimpleEntry<JButton,String>(button, reader.next()));
                 }           
                 reader.close();
             }
-
             updateAddressList();
         } catch (Exception e){
-            
+            e.printStackTrace();
             messager.addMessage("ERROR", e.toString());
         }
     }
@@ -120,7 +118,8 @@ public class AddressList extends JPanel implements ActionListener {
 
             addressList.forEach(a -> {
                 try {
-                    writer.write(a.getKey().getText() + " " + a.getValue() + "\n");
+                    writer.write(a.getKey().getText() + "#" + a.getValue() + "#");
+                    
                 } catch (IOException e) {
                     messager.addMessage("ERROR", e.toString());
                 }
@@ -149,7 +148,7 @@ public class AddressList extends JPanel implements ActionListener {
             addressList.remove(entry.get());
             updateAddressList();
         } else {
-            messager.addMessage("Addresslist", "");
+            messager.addMessage("Addresslist", "Name not Found");
         }
     }
 
